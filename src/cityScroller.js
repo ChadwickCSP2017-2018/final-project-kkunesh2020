@@ -32,6 +32,9 @@ Character grumpy = new Character();
 /* @pjs preload="betterTree.png"; */
 PImage betterTreeImage;
 
+/* @pjs preload="mountains.png"; */
+PImage mountainsImage;
+
 //This function only runs once at the start of the program
 void setup() {
 
@@ -44,6 +47,8 @@ void setup() {
   frameRate(30); //how many times the draw function is called per second
 
   betterTreeImage = loadImage("betterTree.png");
+
+  mountainsImage = loadImage("mountains.png");
 
 }
 
