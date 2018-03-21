@@ -143,6 +143,29 @@ class Tree {
 
 }
 
+class Mountain {
+  Mountain(var xPos) {
+    xPosition = xPos;
+    }
+
+    void drawMountain() {
+        image(mountainsImage, xPosition, 5);
+    }
+
+    void update(var speed){
+      xPosition -= speed;
+
+      if (xPosition < -700) {
+        xPosition = WINDOW_WIDTH + 300;
+      }
+    }
+
+    void drawAndUpdate(mountainSpeed) {
+      drawMountain();
+      update(mountainSpeed);
+    }
+}
+
 class Character {
   var xPosition, yPosition;
   var imageNumber =0;
