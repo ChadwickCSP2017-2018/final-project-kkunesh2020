@@ -26,6 +26,7 @@ Tree testTree2 = new Tree(100);
 Tree testTree = new Tree(400);
 Character grumpy = new Character();
 Mountain mountain1 = new Mountain(500);
+Treeline treeline1 = new Treeline();
 
 
 //since these are variables we don't want to ever change in the code, we capitalize them
@@ -65,6 +66,8 @@ void draw() {
   testTree2.drawAndUpdate(3);
 
   testTree.drawAndUpdate(5);
+
+  treeline1.moveTreeline(5);
 
 
   noStroke();
@@ -123,12 +126,11 @@ class HorizontalLine {
 class Treeline {
   ArrayList < Tree > treeList;
   var xPosition;
-  var speed1;
 
   Treeline() {
     treeList = new ArrayList < Tree > ();
     xPosition = 0;
-    fillSkyline(); //when a Skyline is created it automatically has enough buildings to fill the screen
+    fillTreeline(); //when a Skyline is created it automatically has enough buildings to fill the screen
   }
 
   void moveTreeline(treeline_speed) {
@@ -138,7 +140,7 @@ class Treeline {
 
       var thisTree = treeList.get(i);
       if (thisTree.xPosition <= -300) {
-        buildingList.remove(i);
+        treeList.remove(i);
         i--;
         addTree();
       }
