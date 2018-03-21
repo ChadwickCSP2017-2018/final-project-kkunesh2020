@@ -25,7 +25,7 @@ PImage[] grumpyCharacter = new PImage[16];
 Tree testTree2 = new Tree(100);
 Tree testTree = new Tree(400);
 Character grumpy = new Character();
-
+Mountain mountain = new Mountain();
 
 //since these are variables we don't want to ever change in the code, we capitalize them
 
@@ -64,12 +64,13 @@ testTree2.drawAndUpdate(3);
   testTree.drawAndUpdate(5);
 
 
-
 noStroke();
 fill(color(68, 58, 7));
   rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
 
   grumpy.drawCharacter();
+
+
 }
 
 
