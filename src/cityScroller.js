@@ -120,6 +120,75 @@ class HorizontalLine {
   }
 
 }
+class Treeline {
+  ArrayList < Tree > treeList;
+  var xPosition;
+  var speed1;
+
+  Treeline() {
+    treeList = new ArrayList < Tree > ();
+    xPosition = 0;
+    fillSkyline(); //when a Skyline is created it automatically has enough buildings to fill the screen
+  }
+
+  void moveTreeline(treeline_speed) {
+    drawTreeline();
+    update(treeline_speed);
+    for (var i = 0; i < treeList.size(); i++) {
+
+      var thisTree = treeList.get(i);
+      if (thisTree.xPosition <= -300) {
+        buildingList.remove(i);
+        i--;
+        addTree();
+      }
+
+
+
+    }
+
+  }
+
+  void drawTreeline() {
+    for (var i = 0; i < treeList.size(); i++) {
+
+      var thisTree = treeList.get(i);
+
+      thisTree.drawTree();
+
+
+    }
+
+  }
+
+  void update(treeline_speed) {
+    for (var i = 0; i < treeList.size(); i++) {
+
+      var thisTree = treeList.get(i);
+
+      thisTree.update(treeline_speed);
+
+
+    }
+
+    xPosition -= treeline_speed;
+  }
+
+  void addTree() {
+    Tree currentTree = new Tree(xPosition);
+    treeList.add(currentTree);
+    xPosition += 300;
+
+  }
+
+
+  void fillTreeline() {
+    while (xPosition < WINDOW_WIDTH + 400) {
+      addTree();
+    }
+  }
+}
+
 
 class Tree {
   var xPosition;
