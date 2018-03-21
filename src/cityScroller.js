@@ -1,5 +1,5 @@
-var WINDOW_WIDTH = 1000;
-var WINDOW_HEIGHT = 600;
+var WINDOW_WIDTH = screen.width;
+var WINDOW_HEIGHT = screen.height-100;
 var BACKGROUND_COLOR = color(190, 249, 255);
 
 
@@ -25,7 +25,8 @@ PImage[] grumpyCharacter = new PImage[16];
 Tree testTree2 = new Tree(100);
 Tree testTree = new Tree(400);
 Character grumpy = new Character();
-Mountain mountain = new Mountain();
+Mountain mountain1 = new Mountain(500);
+
 
 //since these are variables we don't want to ever change in the code, we capitalize them
 
@@ -58,14 +59,16 @@ void draw() {
 
   background(BACKGROUND_COLOR); //needed in the draw function to "clear" the screen between updates
 
-stroke();
-testTree2.drawAndUpdate(3);
+  stroke();
+  mountain1.drawAndUpdate(1);
+
+  testTree2.drawAndUpdate(3);
 
   testTree.drawAndUpdate(5);
 
 
-noStroke();
-fill(color(68, 58, 7));
+  noStroke();
+  fill(color(68, 58, 7));
   rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
 
   grumpy.drawCharacter();
@@ -81,12 +84,12 @@ fill(color(68, 58, 7));
 //and functions which manipulate/give information about the attributes
 class HorizontalLine {
 
-//attributes
+  //attributes
   var yPos, speed; //float means they can be decimals
 
   //constructor
   //allows us to easily create different instances of our class
-  HorizontalLine (float y, float s) {
+  HorizontalLine(float y, float s) {
 
     yPos = y;
 
@@ -103,7 +106,7 @@ class HorizontalLine {
 
     yPos += speed;
 
-  //height is a pre-defined variable that is the pixel value for the bottom of the screen
+    //height is a pre-defined variable that is the pixel value for the bottom of the screen
     if (yPos > height) {
       yPos = 0;
     }
@@ -123,66 +126,66 @@ class Tree {
 
   Tree(var xPos) {
     xPosition = xPos;
-    }
+  }
 
-    void drawTree() {
-        image(betterTreeImage, xPosition, 5);
-    }
+  void drawTree() {
+    image(betterTreeImage, xPosition, WINDOW_HEIGHT - 650);
+  }
 
-    void update(var speed){
-      xPosition -= speed;
+  void update(var speed) {
+    xPosition -= speed;
 
-      if (xPosition < -700) {
-        xPosition = WINDOW_WIDTH + 300;
-      }
+    if (xPosition < -700) {
+      xPosition = WINDOW_WIDTH + 300;
     }
+  }
 
-    void drawAndUpdate(treeSpeed) {
-      drawTree();
-      update(treeSpeed);
-    }
+  void drawAndUpdate(treeSpeed) {
+    drawTree();
+    update(treeSpeed);
+  }
 
 }
 
 class Mountain {
   Mountain(var xPos) {
     xPosition = xPos;
-    }
+  }
 
-    void drawMountain() {
-        image(mountainsImage, xPosition, 5);
-    }
+  void drawMountain() {
+    image(mountainsImage, xPosition, WINDOW_HEIGHT - 500);
+  }
 
-    void update(var speed){
-      xPosition -= speed;
+  void update(var speed) {
+    xPosition -= speed;
 
-      if (xPosition < -700) {
-        xPosition = WINDOW_WIDTH + 300;
-      }
+    if (xPosition < -700) {
+      xPosition = WINDOW_WIDTH + 300;
     }
+  }
 
-    void drawAndUpdate(mountainSpeed) {
-      drawMountain();
-      update(mountainSpeed);
-    }
+  void drawAndUpdate(mountainSpeed) {
+    drawMountain();
+    update(mountainSpeed);
+  }
 }
 
 class Character {
   var xPosition, yPosition;
-  var imageNumber =0;
+  var imageNumber = 0;
   Character() {
 
-    xPosition = WINDOW_WIDTH / 2 - 200;
+    xPosition = WINDOW_WIDTH / 2 - 300;
     yPosition = WINDOW_HEIGHT - 320;
   }
 
   void drawCharacter() {
 
-      image(grumpyCharacter[imageNumber], xPosition, yPosition);
-      imageNumber++;
-      if (imageNumber == grumpyCharacter.length) {
-        imageNumber = 0;
-      }
+    image(grumpyCharacter[imageNumber], xPosition, yPosition);
+    imageNumber++;
+    if (imageNumber == grumpyCharacter.length) {
+      imageNumber = 0;
     }
-
   }
+
+}
