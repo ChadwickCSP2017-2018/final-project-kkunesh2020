@@ -1,7 +1,10 @@
 var WINDOW_WIDTH = screen.width;
 var WINDOW_HEIGHT = screen.height - 100;
-var BACKGROUND_COLOR = color(190, 249, 255);
-
+var BACKGROUND_COLOR_MORNING = color(202, 218, 239);
+var BACKGROUND_COLOR_DAY = color(190, 249, 255);
+var BACKGROUND_COLOR_EVENING = color(244, 213, 185);
+var BACKGROUND_COLOR_NIGHT = color(70, 88, 113);
+var Sun_xpos = 200;
 
 /* @pjs preload="grumpyCharacter-0 (dragged).tiff"; */
 /* @pjs preload="grumpyCharacter-1 (dragged).tiff"; */
@@ -54,7 +57,18 @@ void setup() {
 
 void draw() {
 
-  background(BACKGROUND_COLOR);
+  if (Sun_xpos < 300) {
+      background(BACKGROUND_COLOR_MORNING);
+    }
+    else if (Sun_xpos < 950) {
+      background(BACKGROUND_COLOR_DAY);
+    }
+    else if (Sun_xpos < 1550) {
+      background(BACKGROUND_COLOR_EVENING);
+    }
+    else {
+      background(BACKGROUND_COLOR_NIGHT);
+    }
 
   testSun.drawAndUpdate();
 
@@ -200,7 +214,7 @@ class Sun {
   }
 
   void drawAndUpdate() {
-    var sunSpeed = .5;
+    var sunSpeed = 2;
     drawSun();
     update(sunSpeed);
 
@@ -217,8 +231,14 @@ class Sun {
 
   void update(var speed) {
     xPosition += speed;
+    Sun_xpos += speed;
     yPosition += speed/2;
 
+    if (xPosition == WINDOW_WIDTH*2) {
+      xPosition = -500;
+      Sun_xpos = -500;
+      yPosition = -200
+    }
 
   }
 
