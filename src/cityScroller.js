@@ -1,5 +1,5 @@
 var WINDOW_WIDTH = screen.width;
-var WINDOW_HEIGHT = screen.height-100;
+var WINDOW_HEIGHT = screen.height - 100;
 var BACKGROUND_COLOR = color(190, 249, 255);
 
 
@@ -22,14 +22,14 @@ var BACKGROUND_COLOR = color(190, 249, 255);
 
 PImage[] grumpyCharacter = new PImage[16];
 
+Sun testSun = new Sun(200, 150, 150, color(255, 255, 226));
 Tree testTree2 = new Tree(100);
 Tree testTree = new Tree(400);
 Character grumpy = new Character();
 Mountain mountain1 = new Mountain(500);
 Treeline treeline1 = new Treeline();
+Treeline treeline2 = new Treeline();
 
-
-//since these are variables we don't want to ever change in the code, we capitalize them
 
 /* @pjs preload="betterTree.png"; */
 PImage betterTreeImage;
@@ -37,16 +37,14 @@ PImage betterTreeImage;
 /* @pjs preload="mountains.png"; */
 PImage mountainsImage;
 
-//This function only runs once at the start of the program
 void setup() {
-
   for (var i = 0; i < 16; i++) {
     grumpyCharacter[i] = loadImage("grumpyCharacter-" + i + " (dragged).tiff")
   }
 
-  size(WINDOW_WIDTH, WINDOW_HEIGHT); //sets the size of the window
+  size(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-  frameRate(30); //how many times the draw function is called per second
+  frameRate(30);
 
   betterTreeImage = loadImage("betterTree.png");
 
@@ -54,24 +52,23 @@ void setup() {
 
 }
 
-
-//called repeatedly
 void draw() {
 
-  background(BACKGROUND_COLOR); //needed in the draw function to "clear" the screen between updates
+  background(BACKGROUND_COLOR);
+
+  testSun.drawAndUpdate();
 
   stroke();
   mountain1.drawAndUpdate(1);
 
-  testTree2.drawAndUpdate(3);
+  //testTree2.drawAndUpdate(3);
 
-  testTree.drawAndUpdate(5);
-
+  //testTree.drawAndUpdate(5);
+  treeline2.moveTreeline(3);
   treeline1.moveTreeline(5);
 
-
   noStroke();
-  fill(color(68, 58, 7));
+  fill(color(190, 205, 100));
   rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
 
   grumpy.drawCharacter();
@@ -79,58 +76,14 @@ void draw() {
 
 }
 
-
-//This is the definition of your object
-//a class consists of:
-//attributes which describes the object
-//a constructor which sets the default values for the attributes
-//and functions which manipulate/give information about the attributes
-class HorizontalLine {
-
-  //attributes
-  var yPos, speed; //float means they can be decimals
-
-  //constructor
-  //allows us to easily create different instances of our class
-  HorizontalLine(float y, float s) {
-
-    yPos = y;
-
-    speed = s;
-
-  }
-
-  void moveLine() {
-    updateLine();
-    drawLine();
-  }
-
-  void updateLine() {
-
-    yPos += speed;
-
-    //height is a pre-defined variable that is the pixel value for the bottom of the screen
-    if (yPos > height) {
-      yPos = 0;
-    }
-
-
-  }
-
-  void drawLine() {
-    //width is a pre-defined variable that is the pixel value for the right of the screen
-    line(0, yPos, width, yPos);
-  }
-
-}
 class Treeline {
   ArrayList < Tree > treeList;
   var xPosition;
 
   Treeline() {
     treeList = new ArrayList < Tree > ();
-    xPosition = 0;
-    fillTreeline(); //when a Skyline is created it automatically has enough buildings to fill the screen
+    xPosition = -500;
+    fillTreeline();
   }
 
   void moveTreeline(treeline_speed) {
@@ -139,16 +92,12 @@ class Treeline {
     for (var i = 0; i < treeList.size(); i++) {
 
       var thisTree = treeList.get(i);
-      if (thisTree.xPosition <= -300) {
+      if (thisTree.xPosition <= -800) {
         treeList.remove(i);
         i--;
         addTree();
       }
-
-
-
     }
-
   }
 
   void drawTreeline() {
@@ -157,10 +106,7 @@ class Treeline {
       var thisTree = treeList.get(i);
 
       thisTree.drawTree();
-
-
     }
-
   }
 
   void update(treeline_speed) {
@@ -169,8 +115,6 @@ class Treeline {
       var thisTree = treeList.get(i);
 
       thisTree.update(treeline_speed);
-
-
     }
 
     xPosition -= treeline_speed;
@@ -179,13 +123,12 @@ class Treeline {
   void addTree() {
     Tree currentTree = new Tree(xPosition);
     treeList.add(currentTree);
-    xPosition += 300;
-
+    xPosition += random(500, 800);
   }
 
 
   void fillTreeline() {
-    while (xPosition < WINDOW_WIDTH + 400) {
+    while (xPosition < WINDOW_WIDTH + 1000) {
       addTree();
     }
   }
@@ -206,9 +149,9 @@ class Tree {
   void update(var speed) {
     xPosition -= speed;
 
-    if (xPosition < -700) {
-      xPosition = WINDOW_WIDTH + 300;
-    }
+    // if (xPosition < -700) {
+    //   xPosition = WINDOW_WIDTH + 300;
+    // }
   }
 
   void drawAndUpdate(treeSpeed) {
@@ -241,6 +184,46 @@ class Mountain {
   }
 }
 
+class Sun {
+
+  var xPosition, sunWidth, yPosition;
+  var sunColor;
+
+  Sun(var xPos,
+    var sw,
+     var yPos,
+      var color) {
+    sunWidth = sw;
+    xPosition = xPos;
+    yPosition = yPos;
+    sunColor = color;
+  }
+
+  void drawAndUpdate() {
+    var sunSpeed = .5;
+    drawSun();
+    update(sunSpeed);
+
+  }
+
+  void drawSun() {
+    noStroke();
+      fill(color(255, 215, 160));
+      ellipse(xPosition, yPosition, sunWidth + 30, sunWidth + 30);
+      fill(sunColor);
+      ellipse(xPosition, yPosition, sunWidth, sunWidth);
+
+  }
+
+  void update(var speed) {
+    xPosition += speed;
+    yPosition += speed/2;
+
+
+  }
+
+}
+
 class Character {
   var xPosition, yPosition;
   var imageNumber = 0;
@@ -258,5 +241,4 @@ class Character {
       imageNumber = 0;
     }
   }
-
 }
