@@ -386,7 +386,7 @@ class Sun {
   }
 
   void drawAndUpdate() {
-    var sunSpeed = 10;
+    var sunSpeed = 2;
     drawSun();
     update(sunSpeed);
 
