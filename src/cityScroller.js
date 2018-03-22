@@ -32,7 +32,9 @@ Character grumpy = new Character();
 Mountain mountain1 = new Mountain(500);
 Treeline treeline1 = new Treeline();
 Treeline treeline2 = new Treeline();
-
+Cactus testCactus = new Cactus(500);
+Cactus testCactus2 = new Cactus(700);
+//Cactusline cacti1 = new Cactusline();
 
 /* @pjs preload="betterTree.png"; */
 PImage betterTreeImage;
@@ -58,6 +60,21 @@ PImage dayImage;
 /* @pjs preload="stars.png"; */
 PImage starsImage;
 
+/* @pjs preload="cacti 2.png"; */
+PImage cactus2Image;
+
+/* @pjs preload="cacti 3.png"; */
+PImage cactus3Image;
+
+/* @pjs preload="cacti 4.png"; */
+PImage cactus4Image;
+
+/* @pjs preload="cacti 5.png"; */
+PImage cactus5Image;
+
+/* @pjs preload="cacti 6.png"; */
+PImage cactus6Image;
+
 void setup() {
   for (var i = 0; i < 16; i++) {
     grumpyCharacter[i] = loadImage("grumpyCharacter-" + i + " (dragged).tiff")
@@ -80,6 +97,16 @@ void setup() {
   dayImage = loadImage("day.png");
 
   starsImage = loadImage("stars.png");
+
+  cactus2Image = loadImage("cacti 2.png");
+
+  cactus3Image = loadImage("cacti 3.png");
+
+  cactus4Image = loadImage("cacti 4.png");
+
+  cactus5Image = loadImage("cacti 5.png");
+
+  cactus6Image = loadImage("cacti 6.png");
 }
 
 void draw() {
@@ -103,11 +130,16 @@ void draw() {
   stroke();
   mountain1.drawAndUpdate(1);
 
-  //testTree2.drawAndUpdate(3);
+    treeline2.moveTreeline(3);
+    treeline1.moveTreeline(5);
+    testCactus.drawAndUpdate(5);
+    testCactus2.drawAndUpdate(5);
 
-  //testTree.drawAndUpdate(5);
-  treeline2.moveTreeline(3);
-  treeline1.moveTreeline(5);
+  //cacti1.moveCactusline(5);
+
+
+
+
 
   noStroke();
   fill(color(190, 205, 100));
@@ -192,26 +224,125 @@ class Treeline {
 
 class Tree {
   var xPosition;
+  var yPosition;
 
   Tree(var xPos) {
     xPosition = xPos;
+    yPosition = WINDOW_HEIGHT - 650;
   }
 
   void drawTree() {
-    image(betterTreeImage, xPosition, WINDOW_HEIGHT - 650);
+    image(betterTreeImage, xPosition, yPosition, betterTreeImage.width, betterTreeImage.height);
   }
 
   void update(var speed) {
     xPosition -= speed;
 
-    // if (xPosition < -700) {
-    //   xPosition = WINDOW_WIDTH + 300;
-    // }
   }
 
   void drawAndUpdate(treeSpeed) {
     drawTree();
     update(treeSpeed);
+  }
+
+}
+
+class Cactusline {
+  ArrayList < Cactus > cactusList;
+  var xPosition;
+
+  Cactusline() {
+    CactusList = new ArrayList < Cactus > ();
+    xPosition = -500;
+    fillCactusline();
+  }
+
+  void moveCactusline(cactusline_speed) {
+    drawCactusline();
+    update(cactusline_speed);
+    for (var i = 0; i < cactusList.size(); i++) {
+
+      var thisCactus = cactusList.get(i);
+      if (thisCactus.xPosition <= -800) {
+        cactusList.remove(i);
+        i--;
+        addCactus();
+      }
+    }
+  }
+
+  void drawCactusline() {
+    for (var i = 0; i < cactusList.size(); i++) {
+
+      var thisCactus = cactusList.get(i);
+
+      thisCactus.drawCactus();
+    }
+  }
+
+  void update(Cactusline_speed) {
+    for (var i = 0; i < cactusList.size(); i++) {
+
+      var thisCactus = cactusList.get(i);
+
+      thisCactus.update(cactusline_speed);
+    }
+
+    xPosition -= cactusline_speed;
+  }
+
+  void addCactus() {
+    Cactus currentCactus = new Cactus(xPosition);
+    cactusList.add(currentCactus);
+    xPosition += random(500, 800);
+  }
+
+
+  void fillCactusline() {
+    while (xPosition < WINDOW_WIDTH + 1000) {
+      addCactus();
+    }
+  }
+}
+
+
+class Cactus {
+  var xPosition;
+  var yPosition;
+  var cactusNumber;
+
+  Cactus(var xPos) {
+    xPosition = xPos;
+    cactusNumber = int(random(2, 7));
+  }
+
+  void drawCactus() {
+
+    if (cactusNumber === 2) {
+      image(cactus2Image, xPosition, WINDOW_HEIGHT - 183, cactus2Image.width, cactus2Image.height);
+    }
+      else if (cactusNumber === 3) {
+      image(cactus3Image, xPosition, WINDOW_HEIGHT - 250, cactus3Image.width, cactus3Image.height);
+    }
+      else if (cactusNumber === 4) {
+      image(cactus4Image, xPosition, WINDOW_HEIGHT - 350, cactus4Image.width, cactus4Image.height);
+    }
+      else if (cactusNumber === 5) {
+      image(cactus5Image, xPosition, WINDOW_HEIGHT - 175, cactus5Image.width, cactus5Image.height);
+    }
+      else if (cactusNumber === 6){
+      image(cactus6Image, xPosition, WINDOW_HEIGHT - 330, cactus6Image.width, cactus6Image.height);
+    }
+  }
+
+  void update(var speed) {
+    xPosition -= speed;
+
+  }
+
+  void drawAndUpdate(cactusSpeed) {
+    drawCactus();
+    update(cactusSpeed);
   }
 
 }
