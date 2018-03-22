@@ -40,6 +40,24 @@ PImage betterTreeImage;
 /* @pjs preload="mountains.png"; */
 PImage mountainsImage;
 
+/* @pjs preload="morning.png"; */
+PImage morningImage;
+
+/* @pjs preload="evening.png"; */
+PImage eveningImage;
+
+/* @pjs preload="morning.png"; */
+PImage morningImage;
+
+/* @pjs preload="night.png"; */
+PImage nightImage;
+
+/* @pjs preload="day.png"; */
+PImage dayImage;
+
+/* @pjs preload="stars.png"; */
+PImage starsImage;
+
 void setup() {
   for (var i = 0; i < 16; i++) {
     grumpyCharacter[i] = loadImage("grumpyCharacter-" + i + " (dragged).tiff")
@@ -53,6 +71,15 @@ void setup() {
 
   mountainsImage = loadImage("mountains.png");
 
+  morningImage = loadImage("morning.png");
+
+  eveningImage = loadImage("evening.png");
+
+  nightImage = loadImage("night.png");
+
+  dayImage = loadImage("day.png");
+
+  starsImage = loadImage("stars.png");
 }
 
 void draw() {
@@ -68,6 +95,7 @@ void draw() {
     }
     else {
       background(BACKGROUND_COLOR_NIGHT);
+      image(starsImage, 0, -300);
     }
 
   testSun.drawAndUpdate();
@@ -86,6 +114,19 @@ void draw() {
   rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
 
   grumpy.drawCharacter();
+
+  if (Sun_xpos < 300) {
+      image(morningImage, 0, 0, WINDOW_WIDTH + 100, WINDOW_HEIGHT);
+    }
+    else if (Sun_xpos < 950) {
+    image(dayImage, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    }
+    else if (Sun_xpos < 1550) {
+    image(eveningImage, 0, 0, WINDOW_WIDTH + 100, WINDOW_HEIGHT);
+    }
+    else {
+      image(nightImage, 0, 0, WINDOW_WIDTH + 100, WINDOW_HEIGHT);
+    }
 
 
 }
@@ -214,7 +255,7 @@ class Sun {
   }
 
   void drawAndUpdate() {
-    var sunSpeed = 2;
+    var sunSpeed = 10;
     drawSun();
     update(sunSpeed);
 
