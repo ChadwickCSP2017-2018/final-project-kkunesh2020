@@ -29,12 +29,11 @@ Sun testSun = new Sun(200, 150, 150, color(255, 255, 226));
 Tree testTree2 = new Tree(100);
 Tree testTree = new Tree(400);
 Character grumpy = new Character();
-Mountain mountain1 = new Mountain(500);
+Mountainline mountains = new Mountainline();
 Treeline treeline1 = new Treeline();
 Treeline treeline2 = new Treeline();
-Cactus testCactus = new Cactus(500);
-Cactus testCactus2 = new Cactus(700);
-//Cactusline cacti1 = new Cactusline();
+  Cactusline cacti1 = new Cactusline();
+
 
 /* @pjs preload="betterTree.png"; */
 PImage betterTreeImage;
@@ -128,22 +127,24 @@ void draw() {
   testSun.drawAndUpdate();
 
   stroke();
-  mountain1.drawAndUpdate(1);
-
+mountains.moveMountainline(.2);
     treeline2.moveTreeline(3);
     treeline1.moveTreeline(5);
-    testCactus.drawAndUpdate(5);
-    testCactus2.drawAndUpdate(5);
 
-  //cacti1.moveCactusline(5);
+    cacti1.moveCactusline(5);
 
 
-
-
+if (frameCount < 700) {
 
   noStroke();
   fill(color(190, 205, 100));
   rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
+}
+else {
+  noStroke();
+  fill(color(244, 231, 159));
+  rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
+}
 
   grumpy.drawCharacter();
 
@@ -170,7 +171,7 @@ class Treeline {
   Treeline() {
     treeList = new ArrayList < Tree > ();
     xPosition = -500;
-    fillTreeline();
+      fillTreeline();
   }
 
   void moveTreeline(treeline_speed) {
@@ -208,15 +209,20 @@ class Treeline {
   }
 
   void addTree() {
-    Tree currentTree = new Tree(xPosition);
-    treeList.add(currentTree);
-    xPosition += random(500, 800);
+    if (frameCount < 90) {
+      Tree currentTree = new Tree(xPosition);
+      treeList.add(currentTree);
+      xPosition += random(500, 800);
+    }
+
   }
 
 
   void fillTreeline() {
     while (xPosition < WINDOW_WIDTH + 1000) {
-      addTree();
+        addTree();
+
+
     }
   }
 }
@@ -252,12 +258,13 @@ class Cactusline {
   var xPosition;
 
   Cactusline() {
-    CactusList = new ArrayList < Cactus > ();
+    cactusList = new ArrayList < Cactus > ();
     xPosition = -500;
-    fillCactusline();
+      fillCactusline();
   }
 
   void moveCactusline(cactusline_speed) {
+
     drawCactusline();
     update(cactusline_speed);
     for (var i = 0; i < cactusList.size(); i++) {
@@ -280,7 +287,7 @@ class Cactusline {
     }
   }
 
-  void update(Cactusline_speed) {
+  void update(cactusline_speed) {
     for (var i = 0; i < cactusList.size(); i++) {
 
       var thisCactus = cactusList.get(i);
@@ -292,9 +299,11 @@ class Cactusline {
   }
 
   void addCactus() {
-    Cactus currentCactus = new Cactus(xPosition);
-    cactusList.add(currentCactus);
-    xPosition += random(500, 800);
+      Cactus currentCactus = new Cactus(xPosition);
+      cactusList.add(currentCactus);
+      xPosition += random(500, 800);
+
+
   }
 
 
@@ -318,22 +327,44 @@ class Cactus {
 
   void drawCactus() {
 
+if (frameCount < 700) {
+
+
     if (cactusNumber === 2) {
-      image(cactus2Image, xPosition, WINDOW_HEIGHT - 183, cactus2Image.width, cactus2Image.height);
+      image(cactus2Image, xPosition, -400, cactus2Image.width, cactus2Image.height);
     }
       else if (cactusNumber === 3) {
-      image(cactus3Image, xPosition, WINDOW_HEIGHT - 250, cactus3Image.width, cactus3Image.height);
+      image(cactus3Image, xPosition, -400, cactus3Image.width, cactus3Image.height);
     }
       else if (cactusNumber === 4) {
-      image(cactus4Image, xPosition, WINDOW_HEIGHT - 350, cactus4Image.width, cactus4Image.height);
+      image(cactus4Image, xPosition, -400, cactus4Image.width, cactus4Image.height);
     }
       else if (cactusNumber === 5) {
-      image(cactus5Image, xPosition, WINDOW_HEIGHT - 175, cactus5Image.width, cactus5Image.height);
+      image(cactus5Image, xPosition, -400, cactus5Image.width, cactus5Image.height);
     }
       else if (cactusNumber === 6){
-      image(cactus6Image, xPosition, WINDOW_HEIGHT - 330, cactus6Image.width, cactus6Image.height);
+      image(cactus6Image, xPosition, -400, cactus6Image.width, cactus6Image.height);
     }
   }
+else {
+  if (cactusNumber === 2) {
+    image(cactus2Image, xPosition, WINDOW_HEIGHT - 183, cactus2Image.width, cactus2Image.height);
+  }
+    else if (cactusNumber === 3) {
+    image(cactus3Image, xPosition, WINDOW_HEIGHT - 250, cactus3Image.width, cactus3Image.height);
+  }
+    else if (cactusNumber === 4) {
+    image(cactus4Image, xPosition, WINDOW_HEIGHT - 350, cactus4Image.width, cactus4Image.height);
+  }
+    else if (cactusNumber === 5) {
+    image(cactus5Image, xPosition, WINDOW_HEIGHT - 175, cactus5Image.width, cactus5Image.height);
+  }
+    else if (cactusNumber === 6){
+    image(cactus6Image, xPosition, WINDOW_HEIGHT - 330, cactus6Image.width, cactus6Image.height);
+  }
+}
+
+}
 
   void update(var speed) {
     xPosition -= speed;
@@ -370,6 +401,69 @@ class Mountain {
   }
 }
 
+class Mountainline {
+  ArrayList < Mountain > mountainList;
+  var xPosition;
+
+  Mountainline() {
+    mountainList = new ArrayList < Mountain > ();
+    xPosition = -500;
+      fillMountainline();
+  }
+
+  void moveMountainline(mountainline_speed) {
+    drawMountainline();
+    update(mountainline_speed);
+    for (var i = 0; i < mountainList.size(); i++) {
+
+      var thisMountain = mountainList.get(i);
+      if (thisMountain.xPosition <= -700) {
+        mountainList.remove(i);
+        i--;
+        addMountain();
+      }
+    }
+  }
+
+  void drawMountainline() {
+    for (var i = 0; i < mountainList.size(); i++) {
+
+      var thisMountain = mountainList.get(i);
+
+      thisMountain.drawMountain();
+    }
+  }
+
+  void update(mountainline_speed) {
+    for (var i = 0; i < mountainList.size(); i++) {
+
+      var thisMountain = mountainList.get(i);
+
+      thisMountain.update(mountainline_speed);
+    }
+
+    xPosition -= mountainline_speed;
+  }
+
+  void addMountain() {
+    if (frameCount < 90) {
+      Mountain currentMountain = new Mountain(xPosition);
+      mountainList.add(currentMountain);
+      xPosition += random(200, 500);
+    }
+
+  }
+
+
+  void fillMountainline() {
+    while (xPosition < WINDOW_WIDTH + 500) {
+        addMountain();
+
+
+    }
+  }
+}
+
 class Sun {
 
   var xPosition, sunWidth, yPosition;
@@ -386,7 +480,7 @@ class Sun {
   }
 
   void drawAndUpdate() {
-    var sunSpeed = 10;
+    var sunSpeed = 4;
     drawSun();
     update(sunSpeed);
 
