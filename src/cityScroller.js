@@ -5,6 +5,7 @@ var BACKGROUND_COLOR_DAY = color(190, 249, 255);
 var BACKGROUND_COLOR_EVENING = color(244, 213, 185);
 var BACKGROUND_COLOR_NIGHT = color(70, 88, 113);
 var Sun_xpos = 200;
+var desertTime = 1650;
 
 /* @pjs preload="grumpyCharacter-0 (dragged).tiff"; */
 /* @pjs preload="grumpyCharacter-1 (dragged).tiff"; */
@@ -32,7 +33,8 @@ Character grumpy = new Character();
 Mountainline mountains = new Mountainline();
 Treeline treeline1 = new Treeline();
 Treeline treeline2 = new Treeline();
-  Cactusline cacti1 = new Cactusline();
+Cactusline cacti1 = new Cactusline();
+Rockline rocks = new Rockline();
 
 
 /* @pjs preload="betterTree.png"; */
@@ -74,6 +76,12 @@ PImage cactus5Image;
 /* @pjs preload="cacti 6.png"; */
 PImage cactus6Image;
 
+/* @pjs preload="rock1.png"; */
+PImahe rock1Image;
+
+/* @pjs preload="rock2.png"; */
+PImahe rock2Image;
+
 void setup() {
   for (var i = 0; i < 16; i++) {
     grumpyCharacter[i] = loadImage("grumpyCharacter-" + i + " (dragged).tiff")
@@ -106,64 +114,97 @@ void setup() {
   cactus5Image = loadImage("cacti 5.png");
 
   cactus6Image = loadImage("cacti 6.png");
+
+  rock1Image = loadImage("rock1.png");
+
+  rock2Image = loadImage("rock2.png");
 }
 
 void draw() {
-
+  if(frameCount < 5000) {
   if (Sun_xpos < 300) {
-      background(BACKGROUND_COLOR_MORNING);
-    }
-    else if (Sun_xpos < 950) {
-      background(BACKGROUND_COLOR_DAY);
-    }
-    else if (Sun_xpos < 1550) {
-      background(BACKGROUND_COLOR_EVENING);
-    }
-    else {
-      background(BACKGROUND_COLOR_NIGHT);
-      image(starsImage, 0, -300);
-    }
+    background(BACKGROUND_COLOR_MORNING);
+  } else if (Sun_xpos < 950) {
+    background(BACKGROUND_COLOR_DAY);
+  } else if (Sun_xpos < 1550) {
+    background(BACKGROUND_COLOR_EVENING);
+  } else {
+    background(BACKGROUND_COLOR_NIGHT);
+    image(starsImage, 0, -300);
+  }
 
   testSun.drawAndUpdate();
 
   stroke();
-mountains.moveMountainline(.2);
-    treeline2.moveTreeline(3);
-    treeline1.moveTreeline(5);
+  mountains.moveMountainline(1);
+  rocks.moveRockline(1);
+  treeline2.moveTreeline(3);
+  treeline1.moveTreeline(5);
 
-    cacti1.moveCactusline(5);
+  cacti1.moveCactusline(5);
 
 
-if (frameCount < 700) {
+  if (frameCount < desertTime) {
 
-  noStroke();
-  fill(color(190, 205, 100));
-  rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
-}
-else {
-  noStroke();
-  fill(color(244, 231, 159));
-  rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
-}
+    noStroke();
+    fill(color(190, 205, 100));
+    rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
+  }
+  else {
+    noStroke();
+    fill(color(244, 231, 159));
+    rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
+  }
 
   grumpy.drawCharacter();
 
   if (Sun_xpos < 300) {
-      image(morningImage, 0, 0, WINDOW_WIDTH + 100, WINDOW_HEIGHT);
-    }
-    else if (Sun_xpos < 950) {
+    image(morningImage, 0, 0, WINDOW_WIDTH + 100, WINDOW_HEIGHT);
+  } else if (Sun_xpos < 950) {
     image(dayImage, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-    }
-    else if (Sun_xpos < 1550) {
+  } else if (Sun_xpos < 1550) {
     image(eveningImage, 0, 0, WINDOW_WIDTH + 100, WINDOW_HEIGHT);
-    }
-    else {
-      image(nightImage, 0, 0, WINDOW_WIDTH + 100, WINDOW_HEIGHT);
-    }
+  } else {
+    image(nightImage, 0, 0, WINDOW_WIDTH + 100, WINDOW_HEIGHT);
+  }
+  if (frameCount >= 90 && frameCount <= 90 + 200) {
+    rect(400, 290, 670, 150);
+    textSize(100);
+    fill(0);
+    text("Doggy Desert", 430, 400);
+  }
 
+}
+}
+
+////////////////////// Makes A Tree ////////////////////////////////////
+class Tree {
+  var xPosition;
+  var yPosition;
+
+  Tree(var xPos) {
+    xPosition = xPos;
+    yPosition = WINDOW_HEIGHT - 650;
+  }
+
+  void drawTree() {
+    println("tree");
+    image(betterTreeImage, xPosition, yPosition, betterTreeImage.width, betterTreeImage.height);
+  }
+
+  void update(var speed) {
+    xPosition -= speed;
+
+  }
+
+  void drawAndUpdate(treeSpeed) {
+    drawTree();
+    update(treeSpeed);
+  }
 
 }
 
+////////////////////// Makes A Treeline ////////////////////////////////////
 class Treeline {
   ArrayList < Tree > treeList;
   var xPosition;
@@ -171,7 +212,7 @@ class Treeline {
   Treeline() {
     treeList = new ArrayList < Tree > ();
     xPosition = -500;
-      fillTreeline();
+    fillTreeline();
   }
 
   void moveTreeline(treeline_speed) {
@@ -209,7 +250,7 @@ class Treeline {
   }
 
   void addTree() {
-    if (frameCount < 90) {
+    if (frameCount < desertTime - 1200) {
       Tree currentTree = new Tree(xPosition);
       treeList.add(currentTree);
       xPosition += random(500, 800);
@@ -220,7 +261,7 @@ class Treeline {
 
   void fillTreeline() {
     while (xPosition < WINDOW_WIDTH + 1000) {
-        addTree();
+      addTree();
 
 
     }
@@ -228,17 +269,47 @@ class Treeline {
 }
 
 
-class Tree {
+////////////////////// Makes A Cactus ////////////////////////////////////
+class Cactus {
   var xPosition;
   var yPosition;
+  var cactusNumber;
 
-  Tree(var xPos) {
+  Cactus(var xPos) {
     xPosition = xPos;
-    yPosition = WINDOW_HEIGHT - 650;
+    cactusNumber = int(random(2, 7));
   }
 
-  void drawTree() {
-    image(betterTreeImage, xPosition, yPosition, betterTreeImage.width, betterTreeImage.height);
+  void drawCactus() {
+
+    if (frameCount < desertTime) {
+
+
+      if (cactusNumber === 2) {
+        image(cactus2Image, xPosition, -400, cactus2Image.width, cactus2Image.height);
+      } else if (cactusNumber === 3) {
+        image(cactus3Image, xPosition, -400, cactus3Image.width, cactus3Image.height);
+      } else if (cactusNumber === 4) {
+        image(cactus4Image, xPosition, -400, cactus4Image.width, cactus4Image.height);
+      } else if (cactusNumber === 5) {
+        image(cactus5Image, xPosition, -400, cactus5Image.width, cactus5Image.height);
+      } else if (cactusNumber === 6) {
+        image(cactus6Image, xPosition, -400, cactus6Image.width, cactus6Image.height);
+      }
+    } else {
+      if (cactusNumber === 2) {
+        image(cactus2Image, xPosition, WINDOW_HEIGHT - 183, cactus2Image.width, cactus2Image.height);
+      } else if (cactusNumber === 3) {
+        image(cactus3Image, xPosition, WINDOW_HEIGHT - 250, cactus3Image.width, cactus3Image.height);
+      } else if (cactusNumber === 4) {
+        image(cactus4Image, xPosition, WINDOW_HEIGHT - 350, cactus4Image.width, cactus4Image.height);
+      } else if (cactusNumber === 5) {
+        image(cactus5Image, xPosition, WINDOW_HEIGHT - 175, cactus5Image.width, cactus5Image.height);
+      } else if (cactusNumber === 6) {
+        image(cactus6Image, xPosition, WINDOW_HEIGHT - 330, cactus6Image.width, cactus6Image.height);
+      }
+    }
+
   }
 
   void update(var speed) {
@@ -246,13 +317,15 @@ class Tree {
 
   }
 
-  void drawAndUpdate(treeSpeed) {
-    drawTree();
-    update(treeSpeed);
+  void drawAndUpdate(cactusSpeed) {
+    drawCactus();
+    update(cactusSpeed);
   }
 
 }
 
+
+////////////////////// Makes A Cactusline ////////////////////////////////////
 class Cactusline {
   ArrayList < Cactus > cactusList;
   var xPosition;
@@ -260,7 +333,7 @@ class Cactusline {
   Cactusline() {
     cactusList = new ArrayList < Cactus > ();
     xPosition = -500;
-      fillCactusline();
+    fillCactusline();
   }
 
   void moveCactusline(cactusline_speed) {
@@ -299,9 +372,9 @@ class Cactusline {
   }
 
   void addCactus() {
-      Cactus currentCactus = new Cactus(xPosition);
-      cactusList.add(currentCactus);
-      xPosition += random(500, 800);
+    Cactus currentCactus = new Cactus(xPosition);
+    cactusList.add(currentCactus);
+    xPosition += random(500, 800);
 
 
   }
@@ -315,100 +388,45 @@ class Cactusline {
 }
 
 
-class Cactus {
-  var xPosition;
-  var yPosition;
-  var cactusNumber;
-
-  Cactus(var xPos) {
-    xPosition = xPos;
-    cactusNumber = int(random(2, 7));
-  }
-
-  void drawCactus() {
-
-if (frameCount < 700) {
-
-
-    if (cactusNumber === 2) {
-      image(cactus2Image, xPosition, -400, cactus2Image.width, cactus2Image.height);
-    }
-      else if (cactusNumber === 3) {
-      image(cactus3Image, xPosition, -400, cactus3Image.width, cactus3Image.height);
-    }
-      else if (cactusNumber === 4) {
-      image(cactus4Image, xPosition, -400, cactus4Image.width, cactus4Image.height);
-    }
-      else if (cactusNumber === 5) {
-      image(cactus5Image, xPosition, -400, cactus5Image.width, cactus5Image.height);
-    }
-      else if (cactusNumber === 6){
-      image(cactus6Image, xPosition, -400, cactus6Image.width, cactus6Image.height);
-    }
-  }
-else {
-  if (cactusNumber === 2) {
-    image(cactus2Image, xPosition, WINDOW_HEIGHT - 183, cactus2Image.width, cactus2Image.height);
-  }
-    else if (cactusNumber === 3) {
-    image(cactus3Image, xPosition, WINDOW_HEIGHT - 250, cactus3Image.width, cactus3Image.height);
-  }
-    else if (cactusNumber === 4) {
-    image(cactus4Image, xPosition, WINDOW_HEIGHT - 350, cactus4Image.width, cactus4Image.height);
-  }
-    else if (cactusNumber === 5) {
-    image(cactus5Image, xPosition, WINDOW_HEIGHT - 175, cactus5Image.width, cactus5Image.height);
-  }
-    else if (cactusNumber === 6){
-    image(cactus6Image, xPosition, WINDOW_HEIGHT - 330, cactus6Image.width, cactus6Image.height);
-  }
-}
-
-}
-
-  void update(var speed) {
-    xPosition -= speed;
-
-  }
-
-  void drawAndUpdate(cactusSpeed) {
-    drawCactus();
-    update(cactusSpeed);
-  }
-
-}
-
+////////////////////// Makes A Mountain ////////////////////////////////////
 class Mountain {
+var xPosition;
+
   Mountain(var xPos) {
     xPosition = xPos;
   }
 
   void drawMountain() {
+    println("xPosition:" + xPosition);
     image(mountainsImage, xPosition, WINDOW_HEIGHT - 500);
+
   }
 
   void update(var speed) {
     xPosition -= speed;
 
-    if (xPosition < -700) {
-      xPosition = WINDOW_WIDTH + 300;
-    }
   }
 
   void drawAndUpdate(mountainSpeed) {
     drawMountain();
     update(mountainSpeed);
   }
+
+  int getXPosition() {
+    return xPosition;
+  }
 }
 
+
+////////////////////// Makes A Mountainline ////////////////////////////////////
 class Mountainline {
   ArrayList < Mountain > mountainList;
   var xPosition;
 
   Mountainline() {
     mountainList = new ArrayList < Mountain > ();
-    xPosition = -500;
-      fillMountainline();
+    xPosition = -700;
+    fillMountainline();
   }
 
   void moveMountainline(mountainline_speed) {
@@ -417,7 +435,8 @@ class Mountainline {
     for (var i = 0; i < mountainList.size(); i++) {
 
       var thisMountain = mountainList.get(i);
-      if (thisMountain.xPosition <= -700) {
+      println("Mountain's xposition from moveMountainLine" + thisMountain.xPosition);
+      if (thisMountain.xPosition <= -1000) {
         mountainList.remove(i);
         i--;
         addMountain();
@@ -426,8 +445,10 @@ class Mountainline {
   }
 
   void drawMountainline() {
+    println("Mountain List size is currently: " + mountainList.size());
     for (var i = 0; i < mountainList.size(); i++) {
 
+      println("Mountain Number:" + i);
       var thisMountain = mountainList.get(i);
 
       thisMountain.drawMountain();
@@ -442,28 +463,133 @@ class Mountainline {
       thisMountain.update(mountainline_speed);
     }
 
-    xPosition -= mountainline_speed;
   }
 
   void addMountain() {
-    if (frameCount < 90) {
-      Mountain currentMountain = new Mountain(xPosition);
-      mountainList.add(currentMountain);
-      xPosition += random(200, 500);
-    }
-
+    if (frameCount < desertTime - 1620) {
+    Mountain currentMountain = new Mountain(xPosition);
+    mountainList.add(currentMountain);
+    xPosition += random(800, 1000);
+}
   }
 
 
   void fillMountainline() {
-    while (xPosition < WINDOW_WIDTH + 500) {
+      while (xPosition < WINDOW_WIDTH + 400) {
         addMountain();
+    }
+
+  }
+}
 
 
+////////////////////// Makes A Rock ////////////////////////////////////
+class Rock {
+  var rockNumber;
+  var xPosition;
+
+  Rock(var xPos) {
+    xPosition = xPos;
+
+    rockNumber = int(random(1, 3));
+  }
+
+  void drawRock() {
+
+    if (frameCount < desertTime) {
+      if (rockNumber === 1) {
+      image(rock1Image, xPosition, -500);
+    }
+      else if (rockNumber === 2) {
+      image(rock2Image, xPosition, -500);
+    }
+  }
+  else {
+    if (rockNumber === 1) {
+    image(rock1Image, xPosition, WINDOW_HEIGHT - 370);
+  }
+    else if (rockNumber === 2) {
+    image(rock2Image, xPosition, WINDOW_HEIGHT- 370);
+  }
+  }
+
+
+  }
+
+  void update(var speed) {
+    xPosition -= speed;
+  }
+
+  void drawAndUpdate(mountainSpeed) {
+    drawMountain();
+    update(mountainSpeed);
+  }
+}
+
+////////////////////// Makes A Rockline ////////////////////////////////////
+class Rockline {
+  ArrayList < Rock > rockList;
+  var xPosition;
+
+  Rockline() {
+    rockList = new ArrayList < Rock > ();
+    xPosition = -500;
+    fillRockline();
+  }
+
+  void moveRockline(rockline_speed) {
+
+    drawRockline();
+    update(rockline_speed);
+    for (var i = 0; i < rockList.size(); i++) {
+
+      var thisRock = rockList.get(i);
+      if (thisRock.xPosition <= -800) {
+        rockList.remove(i);
+        i--;
+        addRock();
+      }
+    }
+  }
+
+  void drawRockline() {
+    for (var i = 0; i < rockList.size(); i++) {
+
+      var thisRock = rockList.get(i);
+
+      thisRock.drawRock();
+    }
+  }
+
+  void update(rockline_speed) {
+    for (var i = 0; i < rockList.size(); i++) {
+
+      var thisRock = rockList.get(i);
+
+      thisRock.update(rockline_speed);
+    }
+
+    xPosition -= rockline_speed;
+  }
+
+  void addRock() {
+    Rock currentRock = new Rock(xPosition);
+    rockList.add(currentRock);
+    xPosition += random(700, 1000);
+
+
+  }
+
+
+  void fillRockline() {
+    while (xPosition < WINDOW_WIDTH + 1000) {
+      addRock();
     }
   }
 }
 
+
+////////////////////// Makes A Sun ////////////////////////////////////
 class Sun {
 
   var xPosition, sunWidth, yPosition;
@@ -471,8 +597,8 @@ class Sun {
 
   Sun(var xPos,
     var sw,
-     var yPos,
-      var color) {
+      var yPos,
+        var color) {
     sunWidth = sw;
     xPosition = xPos;
     yPosition = yPos;
@@ -488,19 +614,19 @@ class Sun {
 
   void drawSun() {
     noStroke();
-      fill(color(255, 215, 160));
-      ellipse(xPosition, yPosition, sunWidth + 30, sunWidth + 30);
-      fill(sunColor);
-      ellipse(xPosition, yPosition, sunWidth, sunWidth);
+    fill(color(255, 215, 160));
+    ellipse(xPosition, yPosition, sunWidth + 30, sunWidth + 30);
+    fill(sunColor);
+    ellipse(xPosition, yPosition, sunWidth, sunWidth);
 
   }
 
   void update(var speed) {
     xPosition += speed;
     Sun_xpos += speed;
-    yPosition += speed/2;
+    yPosition += speed / 2;
 
-    if (xPosition == WINDOW_WIDTH*2) {
+    if (xPosition == WINDOW_WIDTH * 2) {
       xPosition = -500;
       Sun_xpos = -500;
       yPosition = -200
@@ -510,6 +636,8 @@ class Sun {
 
 }
 
+
+////////////////////// Makes A Character ////////////////////////////////////
 class Character {
   var xPosition, yPosition;
   var imageNumber = 0;
