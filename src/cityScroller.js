@@ -1,5 +1,5 @@
 var WINDOW_WIDTH = screen.width;
-var WINDOW_HEIGHT = screen.height - 100;
+var WINDOW_HEIGHT = screen.height - 200;
 var BACKGROUND_COLOR_MORNING = color(202, 218, 239);
 var BACKGROUND_COLOR_DAY = color(190, 249, 255);
 var BACKGROUND_COLOR_EVENING = color(244, 213, 185);
