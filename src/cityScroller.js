@@ -77,14 +77,14 @@ PImage cactus5Image;
 PImage cactus6Image;
 
 /* @pjs preload="rock1.png"; */
-PImahe rock1Image;
+PImage rock1Image;
 
 /* @pjs preload="rock2.png"; */
-PImahe rock2Image;
+PImage rock2Image;
 
 void setup() {
   for (var i = 0; i < 16; i++) {
-    grumpyCharacter[i] = loadImage("grumpyCharacter-" + i + " (dragged).tiff")
+    grumpyCharacter[i] = loadImage("grumpyCharacter-" + i + ".png")
   }
 
   size(WINDOW_WIDTH, WINDOW_HEIGHT);
