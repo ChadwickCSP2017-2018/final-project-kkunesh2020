@@ -164,7 +164,8 @@ void draw() {
   } else {
     image(nightImage, 0, 0, WINDOW_WIDTH + 100, WINDOW_HEIGHT);
   }
-  if (frameCount >= 90 && frameCount <= 90 + 200) {
+  if (frameCount >= desertTime && frameCount <= desertTime + 200) {
+    fill(255, 249, 237);
     rect(400, 290, 670, 150);
     textSize(100);
     fill(0);
@@ -185,7 +186,6 @@ class Tree {
   }
 
   void drawTree() {
-    println("tree");
     image(betterTreeImage, xPosition, yPosition, betterTreeImage.width, betterTreeImage.height);
   }
 
@@ -394,7 +394,7 @@ var xPosition;
   }
 
   void drawMountain() {
-    println("xPosition:" + xPosition);
+
     image(mountainsImage, xPosition, WINDOW_HEIGHT - 500);
 
   }
@@ -432,7 +432,6 @@ class Mountainline {
     for (var i = 0; i < mountainList.size(); i++) {
 
       var thisMountain = mountainList.get(i);
-      println("Mountain's xposition from moveMountainLine" + thisMountain.xPosition);
       if (thisMountain.xPosition <= -1000) {
         mountainList.remove(i);
         i--;
@@ -442,10 +441,8 @@ class Mountainline {
   }
 
   void drawMountainline() {
-    println("Mountain List size is currently: " + mountainList.size());
-    for (var i = 0; i < mountainList.size(); i++) {
 
-      println("Mountain Number:" + i);
+    for (var i = 0; i < mountainList.size(); i++) {
       var thisMountain = mountainList.get(i);
 
       thisMountain.drawMountain();
