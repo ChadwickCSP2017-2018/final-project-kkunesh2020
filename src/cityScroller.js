@@ -49,9 +49,6 @@ PImage morningImage;
 /* @pjs preload="evening.png"; */
 PImage eveningImage;
 
-/* @pjs preload="morning.png"; */
-PImage morningImage;
-
 /* @pjs preload="night.png"; */
 PImage nightImage;
 
