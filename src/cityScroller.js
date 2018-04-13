@@ -118,7 +118,6 @@ void setup() {
 }
 
 void draw() {
-  println("Frame Rate " + frameRate);
   if (Sun_xpos < 300) {
     background(BACKGROUND_COLOR_MORNING);
   } else if (Sun_xpos < 950) {
