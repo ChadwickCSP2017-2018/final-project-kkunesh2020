@@ -139,6 +139,7 @@ void draw() {
 
   cacti1.moveCactusline(5);
 
+  rect(10, 10, 400, 60); 
 
   if (frameCount < desertTime) {
 
