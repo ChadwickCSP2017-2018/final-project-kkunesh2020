@@ -86,7 +86,7 @@ void setup() {
 
   size(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-  frameRate(30);
+  frameRate(90);
 
   betterTreeImage = loadImage("betterTree.png");
 
@@ -118,7 +118,7 @@ void setup() {
 }
 
 void draw() {
-  if(frameCount < 5000) {
+  println("Frame Rate " + frameRate);
   if (Sun_xpos < 300) {
     background(BACKGROUND_COLOR_MORNING);
   } else if (Sun_xpos < 950) {
@@ -146,8 +146,7 @@ void draw() {
     noStroke();
     fill(color(190, 205, 100));
     rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
-  }
-  else {
+  } else {
     noStroke();
     fill(color(244, 231, 159));
     rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
@@ -172,7 +171,6 @@ void draw() {
     text("Doggy Desert", 430, 400);
   }
 
-}
 }
 
 ////////////////////// Makes A Tree ////////////////////////////////////
@@ -387,7 +385,7 @@ class Cactusline {
 
 ////////////////////// Makes A Mountain ////////////////////////////////////
 class Mountain {
-var xPosition;
+  var xPosition;
 
   Mountain(var xPos) {
     xPosition = xPos;
@@ -456,26 +454,23 @@ class Mountainline {
 
       thisMountain.update(mountainline_speed);
     }
-
   }
 
   void addMountain() {
     if (frameCount < desertTime - 1620) {
-    Mountain currentMountain = new Mountain(xPosition);
-    mountainList.add(currentMountain);
-    xPosition += random(800, 1000);
-}
+      Mountain currentMountain = new Mountain(xPosition);
+      mountainList.add(currentMountain);
+      xPosition += random(800, 1000);
+    }
   }
 
 
   void fillMountainline() {
-      while (xPosition < WINDOW_WIDTH + 400) {
-        addMountain();
+    while (xPosition < WINDOW_WIDTH + 400) {
+      addMountain();
     }
-
   }
 }
-
 
 ////////////////////// Makes A Rock ////////////////////////////////////
 class Rock {
@@ -492,22 +487,17 @@ class Rock {
 
     if (frameCount < desertTime) {
       if (rockNumber === 1) {
-      image(rock1Image, xPosition, -500);
+        image(rock1Image, xPosition, -500);
+      } else if (rockNumber === 2) {
+        image(rock2Image, xPosition, -500);
+      }
+    } else {
+      if (rockNumber === 1) {
+        image(rock1Image, xPosition, WINDOW_HEIGHT - 370);
+      } else if (rockNumber === 2) {
+        image(rock2Image, xPosition, WINDOW_HEIGHT - 370);
+      }
     }
-      else if (rockNumber === 2) {
-      image(rock2Image, xPosition, -500);
-    }
-  }
-  else {
-    if (rockNumber === 1) {
-    image(rock1Image, xPosition, WINDOW_HEIGHT - 370);
-  }
-    else if (rockNumber === 2) {
-    image(rock2Image, xPosition, WINDOW_HEIGHT- 370);
-  }
-  }
-
-
   }
 
   void update(var speed) {
@@ -571,9 +561,7 @@ class Rockline {
     rockList.add(currentRock);
     xPosition += random(700, 1000);
 
-
   }
-
 
   void fillRockline() {
     while (xPosition < WINDOW_WIDTH + 1000) {
@@ -581,7 +569,6 @@ class Rockline {
     }
   }
 }
-
 
 ////////////////////// Makes A Sun ////////////////////////////////////
 class Sun {
@@ -625,12 +612,8 @@ class Sun {
       Sun_xpos = -500;
       yPosition = -200
     }
-
   }
-
 }
-
-
 ////////////////////// Makes A Character ////////////////////////////////////
 class Character {
   var xPosition, yPosition;
