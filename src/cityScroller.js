@@ -5,7 +5,9 @@ var BACKGROUND_COLOR_DAY = color(190, 249, 255);
 var BACKGROUND_COLOR_EVENING = color(244, 213, 185);
 var BACKGROUND_COLOR_NIGHT = color(70, 88, 113);
 var Sun_xpos = 200;
-var desertTime = 1650;
+var desertTime = 2500;
+var health = 100;
+var dayNumber = 1;
 
 /* @pjs preload="grumpyCharacter-0.png"; */
 /* @pjs preload="grumpyCharacter-1.png"; */
@@ -35,6 +37,7 @@ Treeline treeline1 = new Treeline();
 Treeline treeline2 = new Treeline();
 Cactusline cacti1 = new Cactusline();
 Rockline rocks = new Rockline();
+Health healthBar = new Health();
 
 
 /* @pjs preload="betterTree.png"; */
@@ -118,61 +121,64 @@ void setup() {
 }
 
 void draw() {
-  if(frameCount < 5000) {
-  if (Sun_xpos < 300) {
-    background(BACKGROUND_COLOR_MORNING);
-  } else if (Sun_xpos < 950) {
-    background(BACKGROUND_COLOR_DAY);
-  } else if (Sun_xpos < 1550) {
-    background(BACKGROUND_COLOR_EVENING);
-  } else {
-    background(BACKGROUND_COLOR_NIGHT);
-    image(starsImage, 0, -300);
-  }
+    if (Sun_xpos < 300) {
+      background(BACKGROUND_COLOR_MORNING);
+    } else if (Sun_xpos < 950) {
+      background(BACKGROUND_COLOR_DAY);
+    } else if (Sun_xpos < 1550) {
+      background(BACKGROUND_COLOR_EVENING);
+    } else {
+      background(BACKGROUND_COLOR_NIGHT);
+      image(starsImage, 0, -300);
+    }
 
-  testSun.drawAndUpdate();
+    testSun.drawAndUpdate();
 
-  stroke();
-  mountains.moveMountainline(1);
-  rocks.moveRockline(1);
-  treeline2.moveTreeline(3);
-  treeline1.moveTreeline(5);
+    stroke();
+    mountains.moveMountainline(1);
+    rocks.moveRockline(1);
+    treeline2.moveTreeline(3);
+    treeline1.moveTreeline(5);
 
-  cacti1.moveCactusline(5);
+    cacti1.moveCactusline(5);
 
 
-  if (frameCount < desertTime) {
+    if (frameCount < desertTime) {
 
-    noStroke();
-    fill(color(190, 205, 100));
-    rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
-  }
-  else {
-    noStroke();
-    fill(color(244, 231, 159));
-    rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
-  }
+      noStroke();
+      fill(color(190, 205, 100));
+      rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
+    } else {
+      noStroke();
+      fill(color(244, 231, 159));
+      rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
+    }
 
-  grumpy.drawCharacter();
+    grumpy.drawCharacter();
 
-  if (Sun_xpos < 300) {
-    image(morningImage, 0, 0, WINDOW_WIDTH + 100, WINDOW_HEIGHT);
-  } else if (Sun_xpos < 950) {
-    image(dayImage, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-  } else if (Sun_xpos < 1550) {
-    image(eveningImage, 0, 0, WINDOW_WIDTH + 100, WINDOW_HEIGHT);
-  } else {
-    image(nightImage, 0, 0, WINDOW_WIDTH + 100, WINDOW_HEIGHT);
-  }
-  if (frameCount >= desertTime && frameCount <= desertTime + 200) {
-    fill(255, 249, 237);
-    rect(400, 290, 670, 150);
-    textSize(100);
-    fill(0);
-    text("Doggy Desert", 430, 400);
-  }
+    if (Sun_xpos < 300) {
+      image(morningImage, 0, 0, WINDOW_WIDTH + 100, WINDOW_HEIGHT);
+    } else if (Sun_xpos < 950) {
+      image(dayImage, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    } else if (Sun_xpos < 1550) {
+      image(eveningImage, 0, 0, WINDOW_WIDTH + 100, WINDOW_HEIGHT);
+    } else {
+      image(nightImage, 0, 0, WINDOW_WIDTH + 100, WINDOW_HEIGHT);
+    }
+    if (frameCount >= desertTime && frameCount <= desertTime + 200) {
+      fill(255, 249, 237);
+      rect(400, 290, 670, 150);
+      textSize(100);
+      fill(0);
+      text("Doggy Desert", 430, 400);
+    }
+    textSize(30);
+    healthBar.drawHealth();
 
-}
+    textSize(50);
+    text("Day " + dayNumber, WINDOW_WIDTH / 2 - 50, 40);
+
+println("FrameRate:" + frameRate);
 }
 
 ////////////////////// Makes A Tree ////////////////////////////////////
@@ -232,6 +238,7 @@ class Treeline {
       var thisTree = treeList.get(i);
 
       thisTree.drawTree();
+
     }
   }
 
@@ -284,26 +291,36 @@ class Cactus {
 
       if (cactusNumber === 2) {
         image(cactus2Image, xPosition, -400, cactus2Image.width, cactus2Image.height);
+
       } else if (cactusNumber === 3) {
         image(cactus3Image, xPosition, -400, cactus3Image.width, cactus3Image.height);
+
       } else if (cactusNumber === 4) {
         image(cactus4Image, xPosition, -400, cactus4Image.width, cactus4Image.height);
+
       } else if (cactusNumber === 5) {
         image(cactus5Image, xPosition, -400, cactus5Image.width, cactus5Image.height);
+
       } else if (cactusNumber === 6) {
         image(cactus6Image, xPosition, -400, cactus6Image.width, cactus6Image.height);
+
       }
     } else {
       if (cactusNumber === 2) {
         image(cactus2Image, xPosition, WINDOW_HEIGHT - 183, cactus2Image.width, cactus2Image.height);
+
       } else if (cactusNumber === 3) {
         image(cactus3Image, xPosition, WINDOW_HEIGHT - 250, cactus3Image.width, cactus3Image.height);
+
       } else if (cactusNumber === 4) {
         image(cactus4Image, xPosition, WINDOW_HEIGHT - 350, cactus4Image.width, cactus4Image.height);
+
       } else if (cactusNumber === 5) {
         image(cactus5Image, xPosition, WINDOW_HEIGHT - 175, cactus5Image.width, cactus5Image.height);
+
       } else if (cactusNumber === 6) {
         image(cactus6Image, xPosition, WINDOW_HEIGHT - 330, cactus6Image.width, cactus6Image.height);
+
       }
     }
 
@@ -354,6 +371,7 @@ class Cactusline {
       var thisCactus = cactusList.get(i);
 
       thisCactus.drawCactus();
+
     }
   }
 
@@ -387,7 +405,7 @@ class Cactusline {
 
 ////////////////////// Makes A Mountain ////////////////////////////////////
 class Mountain {
-var xPosition;
+  var xPosition;
 
   Mountain(var xPos) {
     xPosition = xPos;
@@ -446,6 +464,7 @@ class Mountainline {
       var thisMountain = mountainList.get(i);
 
       thisMountain.drawMountain();
+
     }
   }
 
@@ -461,16 +480,16 @@ class Mountainline {
 
   void addMountain() {
     if (frameCount < desertTime - 1620) {
-    Mountain currentMountain = new Mountain(xPosition);
-    mountainList.add(currentMountain);
-    xPosition += random(800, 1000);
-}
+      Mountain currentMountain = new Mountain(xPosition);
+      mountainList.add(currentMountain);
+      xPosition += random(800, 1000);
+    }
   }
 
 
   void fillMountainline() {
-      while (xPosition < WINDOW_WIDTH + 400) {
-        addMountain();
+    while (xPosition < WINDOW_WIDTH + 400) {
+      addMountain();
     }
 
   }
@@ -492,20 +511,19 @@ class Rock {
 
     if (frameCount < desertTime) {
       if (rockNumber === 1) {
-      image(rock1Image, xPosition, -500);
+        image(rock1Image, xPosition, -500);
+
+      } else if (rockNumber === 2) {
+
+      }
+    } else {
+      if (rockNumber === 1) {
+
+      } else if (rockNumber === 2) {
+        image(rock2Image, xPosition, WINDOW_HEIGHT - 370);
+
+      }
     }
-      else if (rockNumber === 2) {
-      image(rock2Image, xPosition, -500);
-    }
-  }
-  else {
-    if (rockNumber === 1) {
-    image(rock1Image, xPosition, WINDOW_HEIGHT - 370);
-  }
-    else if (rockNumber === 2) {
-    image(rock2Image, xPosition, WINDOW_HEIGHT- 370);
-  }
-  }
 
 
   }
@@ -552,6 +570,7 @@ class Rockline {
       var thisRock = rockList.get(i);
 
       thisRock.drawRock();
+
     }
   }
 
@@ -623,7 +642,8 @@ class Sun {
     if (xPosition == WINDOW_WIDTH * 2) {
       xPosition = -500;
       Sun_xpos = -500;
-      yPosition = -200
+      yPosition = -200;
+      dayNumber++;
     }
 
   }
@@ -648,5 +668,19 @@ class Character {
     if (imageNumber == grumpyCharacter.length) {
       imageNumber = 0;
     }
+
   }
+}
+
+
+////////////////////// Makes A Health Bar ////////////////////////////////////
+class Health {
+  Health() {}
+  void drawHealth() {
+    fill(100, 250, 110);
+    rect(220, WINDOW_HEIGHT - 40, health * 1.9, 20);
+    fill(255);
+    text("HEALTH: " + health, 20, WINDOW_HEIGHT - 20);
+  }
+
 }
