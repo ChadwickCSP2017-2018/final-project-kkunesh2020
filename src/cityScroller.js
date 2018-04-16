@@ -8,6 +8,7 @@ var Sun_xpos = 200;
 var desertTime = 2500;
 var health = 100;
 var dayNumber = 1;
+var foodNumber = 20;
 
 /* @pjs preload="grumpyCharacter-0.png"; */
 /* @pjs preload="grumpyCharacter-1.png"; */
@@ -38,6 +39,7 @@ Treeline treeline2 = new Treeline();
 Cactusline cacti1 = new Cactusline();
 Rockline rocks = new Rockline();
 Health healthBar = new Health();
+Food foodCount = new Food();
 
 
 /* @pjs preload="betterTree.png"; */
@@ -89,7 +91,7 @@ void setup() {
 
   size(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-  frameRate(90);
+  frameRate(30);
 
   betterTreeImage = loadImage("betterTree.png");
 
@@ -121,6 +123,12 @@ void setup() {
 }
 
 void draw() {
+
+  if (frameCount < 60) {
+    background(252, 224, 231);
+  }
+  else {
+
     if (Sun_xpos < 300) {
       background(BACKGROUND_COLOR_MORNING);
     } else if (Sun_xpos < 950) {
@@ -142,7 +150,6 @@ void draw() {
 
     cacti1.moveCactusline(5);
 
-  rect(10, 10, 400, 60);
 
     if (frameCount < desertTime) {
 
@@ -176,8 +183,11 @@ void draw() {
     textSize(30);
     healthBar.drawHealth();
 
+    foodCount.drawFood();
+
     textSize(50);
     text("Day " + dayNumber, WINDOW_WIDTH / 2 - 50, 40);
+  }
 
 println("FrameRate:" + frameRate);
 }
@@ -668,6 +678,17 @@ class Health {
     rect(220, WINDOW_HEIGHT - 40, health * 1.9, 20);
     fill(255);
     text("HEALTH: " + health, 20, WINDOW_HEIGHT - 20);
+  }
+
+}
+
+
+////////////////////// Makes A Food Count ////////////////////////////////////
+class Food {
+  Food() {}
+  void drawFood() {
+    fill(255);
+    text("FOOD: " + foodNumber, WINDOW_WIDTH - 200, WINDOW_HEIGHT - 20);
   }
 
 }
