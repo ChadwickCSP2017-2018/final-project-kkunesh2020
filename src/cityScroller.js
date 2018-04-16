@@ -669,7 +669,6 @@ class Character {
   }
 }
 
-
 ////////////////////// Makes A Health Bar ////////////////////////////////////
 class Health {
   Health() {}
@@ -681,7 +680,6 @@ class Health {
   }
 
 }
-
 
 ////////////////////// Makes A Food Count ////////////////////////////////////
 class Food {
