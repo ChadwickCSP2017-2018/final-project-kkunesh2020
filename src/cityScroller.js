@@ -346,9 +346,7 @@ class Cactus {
     drawCactus();
     update(cactusSpeed);
   }
-
 }
-
 
 ////////////////////// Makes A Cactusline ////////////////////////////////////
 class Cactusline {
@@ -401,10 +399,7 @@ class Cactusline {
     Cactus currentCactus = new Cactus(xPosition);
     cactusList.add(currentCactus);
     xPosition += random(500, 800);
-
-
   }
-
 
   void fillCactusline() {
     while (xPosition < WINDOW_WIDTH + 1000) {
@@ -412,7 +407,6 @@ class Cactusline {
     }
   }
 }
-
 
 ////////////////////// Makes A Mountain ////////////////////////////////////
 class Mountain {
