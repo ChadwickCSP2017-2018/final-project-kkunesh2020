@@ -1,5 +1,5 @@
 var WINDOW_WIDTH = screen.width;
-var WINDOW_HEIGHT = screen.height - 100;
+var WINDOW_HEIGHT = screen.height - 200;
 var BACKGROUND_COLOR_MORNING = color(202, 218, 239);
 var BACKGROUND_COLOR_DAY = color(190, 249, 255);
 var BACKGROUND_COLOR_EVENING = color(244, 213, 185);
@@ -89,7 +89,7 @@ void setup() {
 
   size(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-  frameRate(30);
+  frameRate(90);
 
   betterTreeImage = loadImage("betterTree.png");
 
@@ -142,6 +142,7 @@ void draw() {
 
     cacti1.moveCactusline(5);
 
+  rect(10, 10, 400, 60);
 
     if (frameCount < desertTime) {
 
@@ -475,7 +476,6 @@ class Mountainline {
 
       thisMountain.update(mountainline_speed);
     }
-
   }
 
   void addMountain() {
@@ -491,10 +491,8 @@ class Mountainline {
     while (xPosition < WINDOW_WIDTH + 400) {
       addMountain();
     }
-
   }
 }
-
 
 ////////////////////// Makes A Rock ////////////////////////////////////
 class Rock {
@@ -512,20 +510,16 @@ class Rock {
     if (frameCount < desertTime) {
       if (rockNumber === 1) {
         image(rock1Image, xPosition, -500);
-
       } else if (rockNumber === 2) {
-
+        image(rock2Image, xPosition, -500);
       }
     } else {
       if (rockNumber === 1) {
-
+        image(rock1Image, xPosition, WINDOW_HEIGHT - 370);
       } else if (rockNumber === 2) {
         image(rock2Image, xPosition, WINDOW_HEIGHT - 370);
-
       }
     }
-
-
   }
 
   void update(var speed) {
@@ -590,9 +584,7 @@ class Rockline {
     rockList.add(currentRock);
     xPosition += random(700, 1000);
 
-
   }
-
 
   void fillRockline() {
     while (xPosition < WINDOW_WIDTH + 1000) {
@@ -600,7 +592,6 @@ class Rockline {
     }
   }
 }
-
 
 ////////////////////// Makes A Sun ////////////////////////////////////
 class Sun {
@@ -645,12 +636,8 @@ class Sun {
       yPosition = -200;
       dayNumber++;
     }
-
   }
-
 }
-
-
 ////////////////////// Makes A Character ////////////////////////////////////
 class Character {
   var xPosition, yPosition;
