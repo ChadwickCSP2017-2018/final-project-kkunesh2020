@@ -437,7 +437,6 @@ class Mountain {
   }
 }
 
-
 ////////////////////// Makes A Mountainline ////////////////////////////////////
 class Mountainline {
   ArrayList < Mountain > mountainList;
@@ -659,7 +658,6 @@ class Character {
     if (imageNumber == grumpyCharacter.length) {
       imageNumber = 0;
     }
-
   }
 }
 
