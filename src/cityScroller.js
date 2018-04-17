@@ -638,6 +638,7 @@ class Sun {
       Sun_xpos = -500;
       yPosition = -200;
       dayNumber++;
+      foodNumber-=5;
     }
   }
 }
