@@ -10,6 +10,7 @@ var health = 100;
 var dayNumber = 1;
 var foodNumber = 20;
 
+
 /* @pjs preload="grumpyCharacter-0.png"; */
 /* @pjs preload="grumpyCharacter-1.png"; */
 /* @pjs preload="grumpyCharacter-2.png"; */
@@ -29,10 +30,49 @@ var foodNumber = 20;
 
 PImage[] grumpyCharacter = new PImage[16];
 
+
+/* @pjs preload="frisbeeDog-1.png"; */
+/* @pjs preload="frisbeeDog-2.png"; */
+/* @pjs preload="frisbeeDog-3.png"; */
+/* @pjs preload="frisbeeDog-4.png"; */
+/* @pjs preload="frisbeeDog-5.png"; */
+/* @pjs preload="frisbeeDog-6.png"; */
+/* @pjs preload="frisbeeDog-7.png"; */
+/* @pjs preload="frisbeeDog-8.png"; */
+/* @pjs preload="frisbeeDog-9.png"; */
+/* @pjs preload="frisbeeDog-10.png"; */
+/* @pjs preload="frisbeeDog-11.png"; */
+/* @pjs preload="frisbeeDog-12.png"; */
+/* @pjs preload="frisbeeDog-13.png"; */
+/* @pjs preload="frisbeeDog-14.png"; */
+/* @pjs preload="frisbeeDog-15.png"; */
+/* @pjs preload="frisbeeDog-16.png"; */
+/* @pjs preload="frisbeeDog-17.png"; */
+/* @pjs preload="frisbeeDog-18.png"; */
+/* @pjs preload="frisbeeDog-19.png"; */
+/* @pjs preload="frisbeeDog-20.png"; */
+/* @pjs preload="frisbeeDog-21.png"; */
+/* @pjs preload="frisbeeDog-22.png"; */
+/* @pjs preload="frisbeeDog-23.png"; */
+/* @pjs preload="frisbeeDog-24.png"; */
+/* @pjs preload="frisbeeDog-25.png"; */
+/* @pjs preload="frisbeeDog-26.png"; */
+/* @pjs preload="frisbeeDog-27.png"; */
+/* @pjs preload="frisbeeDog-28.png"; */
+/* @pjs preload="frisbeeDog-29.png"; */
+/* @pjs preload="frisbeeDog-30.png"; */
+/* @pjs preload="frisbeeDog-31.png"; */
+/* @pjs preload="frisbeeDog-32.png"; */
+/* @pjs preload="frisbeeDog-33.png"; */
+
+PImage[] frisbeeCharacter = new PImage[33];
+
 Sun testSun = new Sun(200, 150, 150, color(255, 255, 226));
 Tree testTree2 = new Tree(100);
 Tree testTree = new Tree(400);
-Character grumpy = new Character();
+GrumpyCharacter grumpy = new GrumpyCharacter(WINDOW_WIDTH / 2 - 300, WINDOW_HEIGHT - 320);
+GrumpyCharacter startingScreenGrumpy = new GrumpyCharacter(200, 50);
+FrisbeeCharacter startingScreenFrisbee = new FrisbeeCharacter(700, 75);
 Mountainline mountains = new Mountainline();
 Treeline treeline1 = new Treeline();
 Treeline treeline2 = new Treeline();
@@ -89,6 +129,10 @@ void setup() {
     grumpyCharacter[i] = loadImage("grumpyCharacter-" + i + ".png")
   }
 
+  for (var i = 1; i < 34; i++) {
+    frisbeeCharacter[i] = loadImage("frisbeeDog-" + i + ".png")
+  }
+
   size(WINDOW_WIDTH, WINDOW_HEIGHT);
 
   frameRate(30);
@@ -124,8 +168,19 @@ void setup() {
 
 void draw() {
 
-  if (frameCount < 60) {
-    background(252, 224, 231);
+  if (frameCount < 120) {
+    background(BACKGROUND_COLOR_EVENING);
+    image(cactus3Image, 100, WINDOW_HEIGHT - 250);
+    image(cactus4Image, 300, WINDOW_HEIGHT - 350);
+    image(cactus6Image, 1100, WINDOW_HEIGHT - 330)
+    noStroke();
+    fill(color(244, 231, 159));
+    rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
+    textSize(50);
+    fill(255);
+    text("CHOOSE YOUR CHARACTER", 370, 100);
+    startingScreenGrumpy.drawGrumpyCharacter();
+    startingScreenFrisbee.drawFrisbeeCharacter();
   }
   else {
 
@@ -162,7 +217,7 @@ void draw() {
       rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
     }
 
-    grumpy.drawCharacter();
+    grumpy.drawGrumpyCharacter();
 
     if (Sun_xpos < 300) {
       image(morningImage, 0, 0, WINDOW_WIDTH + 100, WINDOW_HEIGHT);
@@ -638,20 +693,20 @@ class Sun {
       Sun_xpos = -500;
       yPosition = -200;
       dayNumber++;
+      foodNumber -= 5;
     }
   }
 }
-////////////////////// Makes A Character ////////////////////////////////////
-class Character {
+////////////////////// Makes A Grumpy Character ////////////////////////////////////
+class GrumpyCharacter {
   var xPosition, yPosition;
   var imageNumber = 0;
-  Character() {
-
-    xPosition = WINDOW_WIDTH / 2 - 300;
-    yPosition = WINDOW_HEIGHT - 320;
+  GrumpyCharacter(xPos, yPos) {
+    xPosition = xPos;
+    yPosition = yPos;
   }
 
-  void drawCharacter() {
+  void drawGrumpyCharacter() {
 
     image(grumpyCharacter[imageNumber], xPosition, yPosition);
     imageNumber++;
@@ -661,14 +716,41 @@ class Character {
   }
 }
 
+////////////////////// Makes A Frisbee Character ////////////////////////////////////
+class FrisbeeCharacter {
+  var xPosition, yPosition;
+  var imageNumber = 1;
+  FrisbeeCharacter(xPos, yPos) {
+    xPosition = xPos;
+    yPosition = yPos;
+  }
+
+  void drawFrisbeeCharacter() {
+
+    image(frisbeeCharacter[imageNumber], xPosition, yPosition, 504, 378);
+    imageNumber++;
+    if (imageNumber == frisbeeCharacter.length) {
+      imageNumber = 1;
+    }
+  }
+}
+
 ////////////////////// Makes A Health Bar ////////////////////////////////////
 class Health {
   Health() {}
   void drawHealth() {
+
     fill(100, 250, 110);
     rect(220, WINDOW_HEIGHT - 40, health * 1.9, 20);
     fill(255);
-    text("HEALTH: " + health, 20, WINDOW_HEIGHT - 20);
+    text("HEALTH: " + int(health), 20, WINDOW_HEIGHT - 20);
+
+    if (foodNumber <= 0) {
+      if (health >= 0) {
+              health -= .02;
+      }
+
+    }
   }
 
 }
