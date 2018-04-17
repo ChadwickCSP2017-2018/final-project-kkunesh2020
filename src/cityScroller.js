@@ -17,6 +17,18 @@ var foodNumber = 0;
 var characterVersion = 0;
 var selectXPos = 250;
 var gameStart = 0;
+var berryXPos = 250;
+var wolvesXPos = 250;
+var noiseXPos = 250;
+var snakesXPos = 250;
+var hungryXPos = 250;
+var berryVersion = 0;
+var wolvesVersion = 0;
+var noiseVersion = 0;
+var snakesVersion = 0;
+var hungryVersion = 0;
+var eventEnd = 0;
+
 
 /* @pjs preload="grumpyCharacter-0.png"; */
 /* @pjs preload="grumpyCharacter-1.png"; */
@@ -176,22 +188,22 @@ void setup() {
 }
 
 void draw() {
-    background(BACKGROUND_COLOR_EVENING);
-    image(cactus3Image, 100, WINDOW_HEIGHT - 250);
-    image(cactus4Image, 300, WINDOW_HEIGHT - 350);
-    image(cactus6Image, 1100, WINDOW_HEIGHT - 330)
-    noStroke();
-    fill(color(244, 231, 159));
-    rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
-    textSize(50);
-    fill(255);
-    text("CHOOSE YOUR CHARACTER", 370, 100);
-    text("PRESS THE UP ARROW TO BEGIN", 370, WINDOW_HEIGHT - 100);
-    selectButton.SelectCharacter();
-    startingScreenGrumpy.drawGrumpyCharacter();
-    startingScreenFrisbee.drawFrisbeeCharacter();
+  background(BACKGROUND_COLOR_EVENING);
+  image(cactus3Image, 100, WINDOW_HEIGHT - 250);
+  image(cactus4Image, 300, WINDOW_HEIGHT - 350);
+  image(cactus6Image, 1100, WINDOW_HEIGHT - 330)
+  noStroke();
+  fill(color(244, 231, 159));
+  rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
+  textSize(50);
+  fill(255);
+  text("CHOOSE YOUR CHARACTER", 370, 100);
+  text("PRESS THE UP ARROW TO BEGIN", 370, WINDOW_HEIGHT - 100);
+  selectButton.SelectCharacter();
+  startingScreenGrumpy.drawGrumpyCharacter();
+  startingScreenFrisbee.drawFrisbeeCharacter();
 
-if(gameStart === 1){
+  if (gameStart === 1) {
 
     if (Sun_xpos < 300) {
       background(BACKGROUND_COLOR_MORNING);
@@ -225,12 +237,11 @@ if(gameStart === 1){
       fill(color(244, 231, 159));
       rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
     }
-if (characterVersion == 1) {
-  grumpy.drawGrumpyCharacter();
-}
-else if (characterVersion == 2) {
-  frisbee.drawFrisbeeCharacter();
-}
+    if (characterVersion == 1) {
+      grumpy.drawGrumpyCharacter();
+    } else if (characterVersion == 2) {
+      frisbee.drawFrisbeeCharacter();
+    }
 
 
     if (Sun_xpos < 300) {
@@ -258,7 +269,7 @@ else if (characterVersion == 2) {
     text("Day " + dayNumber, WINDOW_WIDTH / 2 - 50, 40);
   }
 
-println("FrameRate:" + frameRate);
+  println("FrameRate:" + frameRate);
 }
 
 ////////////////////// Makes A Tree ////////////////////////////////////
@@ -708,7 +719,7 @@ class Sun {
       yPosition = -200;
       dayNumber++;
       if (foodNumber > 0) {
-      foodNumber -= 5;
+        foodNumber -= 5;
       }
 
     }
@@ -764,7 +775,7 @@ class Health {
 
     if (foodNumber <= 0) {
       if (health >= 0) {
-              health -= .02;
+        health -= .02;
       }
 
     }
@@ -793,21 +804,17 @@ class Select {
         fill(255);
         rect(selectXPos, 170, 400, 200);
 
-      }
-      else if (keyCode == RIGHT_ARROW) {
+      } else if (keyCode == RIGHT_ARROW) {
         selectXPos = 750;
         characterVersion = 2;
         fill(255);
         rect(selectXPos, 170, 400, 200);
 
-      }
-      else {
+      } else {
         fill(255);
         rect(selectXPos, 170, 400, 200);
       }
-    }
-
-    else {
+    } else {
       fill(255);
       rect(selectXPos, 170, 400, 200);
     }
@@ -817,7 +824,82 @@ class Select {
         gameStart = 1;
       }
     }
+  }
+}
 
+////////////////////// Makes A Random Event ////////////////////////////////////
+class RandomEvent {
+  var eventNumber;
+  var eventTime;
+
+  RandomEvent(var et) {
+    eventTime = et;
+    evenNumber = int(random(1, 6));
   }
 
+  void drawEvent() {
+
+    if (frameCount >= eventTime && eventEnd == 0) {
+      if (eventNumber === 1) {
+        if (keyPressed) {
+          if (keyCode == LEFT_ARROW) {
+            berryXPos = 250;
+            berryVersion = 1;
+            fill(70, 88, 113);
+            rect(berryXPos, 170, 400, 200);
+
+          } else if (keyCode == RIGHT_ARROW) {
+            selectXPos = 600;
+            berryVersion = 2;
+            fill(70, 88, 113);
+            rect(berryXPos, 170, 400, 200);
+
+          } else {
+            fill(70, 88, 113);
+            rect(berryXPos, 170, 400, 200);
+          }
+        } else {
+          fill(2570, 88, 1135);
+          rect(berryXPos, 170, 400, 200);
+        }
+
+        if (keyPressed) {
+          if (keyCode == UP_ARROW) {
+            eventEnd = 1;
+          }
+        }
+
+        textSize(30);
+        fill(255);
+        text("You have found berries! Would you like to take them?", 370, 300);
+        text("Yes", 400, 500);
+        text("No", 600, 500);
+
+      } else if (eventNumber === 2) {
+        textSize(30);
+        fill(255);
+        text("You are surrounded by wolves!", 370, 300);
+        text("Run", 400, 500);
+        text("Feed", 600, 500);
+      } else if (eventNumber === 3) {
+        textSize(30);
+        fill(255);
+        text("You hear a noise. Should you investigate?", 370, 300);
+        text("Yes", 400, 500);
+        text("No", 600, 500);
+      } else if (eventNumber === 4) {
+        textSize(30);
+        fill(255);
+        text("Look! A ton of snakes!", 370, 300);
+        text("Sneak by", 400, 500);
+        text("Attack!", 600, 500);
+      } else if (eventNumber === 5) {
+        textSize(30);
+        fill(255);
+        text("You are really hungry!", 370, 300);
+        text("Eat", 400, 500);
+        text("Don't eat", 600, 500);
+      }
+    }
+  }
 }
