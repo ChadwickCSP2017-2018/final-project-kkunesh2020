@@ -8,7 +8,7 @@ var Sun_xpos = 200;
 var desertTime = 2500;
 var health = 100;
 var dayNumber = 1;
-var foodNumber = 20;
+var foodNumber = 30;
 
 
 /* @pjs preload="grumpyCharacter-0.png"; */
