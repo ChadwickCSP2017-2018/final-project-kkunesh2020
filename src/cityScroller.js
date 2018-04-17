@@ -639,6 +639,7 @@ class Sun {
       yPosition = -200;
       dayNumber++;
       foodNumber-=5;
+      health-=20;
     }
   }
 }
