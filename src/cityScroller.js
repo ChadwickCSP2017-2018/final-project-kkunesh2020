@@ -11,7 +11,7 @@ var RIGHT_ARROW = '39';
 var ENTER_KEY = '13';
 var Sun_xpos = 200;
 var desertTime = 2500;
-var health = 100;
+var health = 5;
 var dayNumber = 1;
 var foodNumber = 0;
 var characterVersion = 0;
@@ -267,6 +267,14 @@ void draw() {
 
     textSize(50);
     text("Day " + dayNumber, WINDOW_WIDTH / 2 - 50, 40);
+
+    if (health <= 0) {
+        fill(color(255, 188, 234));
+        rect(0, 0, 2000, 2000);
+        textSize(100);
+        fill(0);
+        text("Game Over", 430, 400);
+      }
   }
 
   println("FrameRate:" + frameRate);
