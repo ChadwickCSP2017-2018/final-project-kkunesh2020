@@ -4,12 +4,19 @@ var BACKGROUND_COLOR_MORNING = color(202, 218, 239);
 var BACKGROUND_COLOR_DAY = color(190, 249, 255);
 var BACKGROUND_COLOR_EVENING = color(244, 213, 185);
 var BACKGROUND_COLOR_NIGHT = color(70, 88, 113);
+var UP_ARROW = '38';
+var DOWN_ARROW = '40';
+var LEFT_ARROW = '37';
+var RIGHT_ARROW = '39';
+var ENTER_KEY = '13';
 var Sun_xpos = 200;
 var desertTime = 2500;
 var health = 100;
 var dayNumber = 1;
-var foodNumber = 30;
-
+var foodNumber = 0;
+var characterVersion = 0;
+var selectXPos = 250;
+var gameStart = 0;
 
 /* @pjs preload="grumpyCharacter-0.png"; */
 /* @pjs preload="grumpyCharacter-1.png"; */
@@ -71,6 +78,7 @@ Sun testSun = new Sun(200, 150, 150, color(255, 255, 226));
 Tree testTree2 = new Tree(100);
 Tree testTree = new Tree(400);
 GrumpyCharacter grumpy = new GrumpyCharacter(WINDOW_WIDTH / 2 - 300, WINDOW_HEIGHT - 320);
+FrisbeeCharacter frisbee = new FrisbeeCharacter(WINDOW_WIDTH / 2 - 300, WINDOW_HEIGHT - 300);
 GrumpyCharacter startingScreenGrumpy = new GrumpyCharacter(200, 50);
 FrisbeeCharacter startingScreenFrisbee = new FrisbeeCharacter(700, 75);
 Mountainline mountains = new Mountainline();
@@ -80,6 +88,7 @@ Cactusline cacti1 = new Cactusline();
 Rockline rocks = new Rockline();
 Health healthBar = new Health();
 Food foodCount = new Food();
+Select selectButton = new Select();
 
 
 /* @pjs preload="betterTree.png"; */
@@ -167,8 +176,6 @@ void setup() {
 }
 
 void draw() {
-
-  if (frameCount < 120) {
     background(BACKGROUND_COLOR_EVENING);
     image(cactus3Image, 100, WINDOW_HEIGHT - 250);
     image(cactus4Image, 300, WINDOW_HEIGHT - 350);
@@ -179,10 +186,12 @@ void draw() {
     textSize(50);
     fill(255);
     text("CHOOSE YOUR CHARACTER", 370, 100);
+    text("PRESS THE UP ARROW TO BEGIN", 370, WINDOW_HEIGHT - 100);
+    selectButton.SelectCharacter();
     startingScreenGrumpy.drawGrumpyCharacter();
     startingScreenFrisbee.drawFrisbeeCharacter();
-  }
-  else {
+
+if(gameStart === 1){
 
     if (Sun_xpos < 300) {
       background(BACKGROUND_COLOR_MORNING);
@@ -216,8 +225,13 @@ void draw() {
       fill(color(244, 231, 159));
       rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50);
     }
+if (characterVersion == 1) {
+  grumpy.drawGrumpyCharacter();
+}
+else if (characterVersion == 2) {
+  frisbee.drawFrisbeeCharacter();
+}
 
-    grumpy.drawGrumpyCharacter();
 
     if (Sun_xpos < 300) {
       image(morningImage, 0, 0, WINDOW_WIDTH + 100, WINDOW_HEIGHT);
@@ -693,7 +707,10 @@ class Sun {
       Sun_xpos = -500;
       yPosition = -200;
       dayNumber++;
+      if (foodNumber > 0) {
       foodNumber -= 5;
+      }
+
     }
   }
 }
@@ -761,6 +778,46 @@ class Food {
   void drawFood() {
     fill(255);
     text("FOOD: " + foodNumber, WINDOW_WIDTH - 200, WINDOW_HEIGHT - 20);
+  }
+
+}
+
+////////////////////// Makes A Selection Box ////////////////////////////////////
+class Select {
+  Select() {}
+  void SelectCharacter() {
+    if (keyPressed) {
+      if (keyCode == LEFT_ARROW) {
+        selectXPos = 250;
+        characterVersion = 1;
+        fill(255);
+        rect(selectXPos, 170, 400, 200);
+
+      }
+      else if (keyCode == RIGHT_ARROW) {
+        selectXPos = 750;
+        characterVersion = 2;
+        fill(255);
+        rect(selectXPos, 170, 400, 200);
+
+      }
+      else {
+        fill(255);
+        rect(selectXPos, 170, 400, 200);
+      }
+    }
+
+    else {
+      fill(255);
+      rect(selectXPos, 170, 400, 200);
+    }
+
+    if (keyPressed) {
+      if (keyCode == UP_ARROW) {
+        gameStart = 1;
+      }
+    }
+
   }
 
 }
