@@ -9,6 +9,7 @@ var DOWN_ARROW = '40';
 var LEFT_ARROW = '37';
 var RIGHT_ARROW = '39';
 var ENTER_KEY = '13';
+var SPACE_BAR = '32';
 var BACKGROUND_MUSIC = new Audio('Hello Ditty.mp3');
 var Sun_xpos = 200;
 var desertTime = 2500;
