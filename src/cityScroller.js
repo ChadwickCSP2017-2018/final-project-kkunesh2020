@@ -13,7 +13,7 @@ var Sun_xpos = 200;
 var desertTime = 2500;
 var health = 100;
 var dayNumber = 1;
-var foodNumber = 0;
+var foodNumber = 20;
 var characterVersion = 0;
 var selectXPos = 250;
 var gameStart = 0;
@@ -101,6 +101,7 @@ Rockline rocks = new Rockline();
 Health healthBar = new Health();
 Food foodCount = new Food();
 Select selectButton = new Select();
+SelectEvent events = new SelectEvent();
 
 
 /* @pjs preload="betterTree.png"; */
@@ -203,7 +204,7 @@ void draw() {
   startingScreenGrumpy.drawGrumpyCharacter();
   startingScreenFrisbee.drawFrisbeeCharacter();
 
-  if (gameStart === 1) {
+  if (gameStart === 1 && health > 0) {
 
     if (Sun_xpos < 300) {
       background(BACKGROUND_COLOR_MORNING);
@@ -268,15 +269,15 @@ void draw() {
     textSize(50);
     text("Day " + dayNumber, WINDOW_WIDTH / 2 - 50, 40);
 
-    if (health <= 0) {
-        fill(color(255, 188, 234));
-        rect(0, 0, 2000, 2000);
-        textSize(100);
-        fill(0);
-        text("Game Over", 430, 400);
-      }
-  }
+    events.makeEvent();
 
+  } else if (health <= 0) {
+    background(BACKGROUND_COLOR_NIGHT);
+    image(starsImage, 0, -300);
+    textSize(100);
+    fill(255);
+    text("Game Over", 430, 200);
+  }
   println("FrameRate:" + frameRate);
 }
 
@@ -847,7 +848,7 @@ class RandomEvent {
 
   void drawEvent() {
 
-    if (frameCount >= eventTime && eventEnd == 0) {
+    if (eventEnd == 0) {
       if (eventNumber === 1) {
         if (keyPressed) {
           if (keyCode == LEFT_ARROW) {
@@ -884,24 +885,132 @@ class RandomEvent {
         text("No", 600, 500);
 
       } else if (eventNumber === 2) {
+        if (keyPressed) {
+          if (keyCode == LEFT_ARROW) {
+            wolvesXPos = 250;
+            wolvesVersion = 1;
+            fill(70, 88, 113);
+            rect(wolvesXPos, 170, 400, 200);
+
+          } else if (keyCode == RIGHT_ARROW) {
+            selectXPos = 600;
+            wolvesVersion = 2;
+            fill(70, 88, 113);
+            rect(wolvesXPos, 170, 400, 200);
+
+          } else {
+            fill(70, 88, 113);
+            rect(wolvesXPos, 170, 400, 200);
+          }
+        } else {
+          fill(2570, 88, 1135);
+          rect(wolvesXPos, 170, 400, 200);
+        }
+
+        if (keyPressed) {
+          if (keyCode == UP_ARROW) {
+            eventEnd = 1;
+          }
+        }
         textSize(30);
         fill(255);
         text("You are surrounded by wolves!", 370, 300);
         text("Run", 400, 500);
         text("Feed", 600, 500);
       } else if (eventNumber === 3) {
+        if (keyPressed) {
+          if (keyCode == LEFT_ARROW) {
+            noiseXPos = 250;
+            noiseVersion = 1;
+            fill(70, 88, 113);
+            rect(noiseXPos, 170, 400, 200);
+
+          } else if (keyCode == RIGHT_ARROW) {
+            selectXPos = 600;
+            noiseVersion = 2;
+            fill(70, 88, 113);
+            rect(noiseXPos, 170, 400, 200);
+
+          } else {
+            fill(70, 88, 113);
+            rect(noiseXPos, 170, 400, 200);
+          }
+        } else {
+          fill(2570, 88, 1135);
+          rect(noiseXPos, 170, 400, 200);
+        }
+
+        if (keyPressed) {
+          if (keyCode == UP_ARROW) {
+            eventEnd = 1;
+          }
+        }
         textSize(30);
         fill(255);
         text("You hear a noise. Should you investigate?", 370, 300);
         text("Yes", 400, 500);
         text("No", 600, 500);
       } else if (eventNumber === 4) {
+        if (keyPressed) {
+          if (keyCode == LEFT_ARROW) {
+            snakesXPos = 250;
+            snakesVersion = 1;
+            fill(70, 88, 113);
+            rect(snakesXPos, 170, 400, 200);
+
+          } else if (keyCode == RIGHT_ARROW) {
+            selectXPos = 600;
+            snakesVersion = 2;
+            fill(70, 88, 113);
+            rect(snakesXPos, 170, 400, 200);
+
+          } else {
+            fill(70, 88, 113);
+            rect(snakesXPos, 170, 400, 200);
+          }
+        } else {
+          fill(2570, 88, 1135);
+          rect(snakesXPos, 170, 400, 200);
+        }
+
+        if (keyPressed) {
+          if (keyCode == UP_ARROW) {
+            eventEnd = 1;
+          }
+        }
         textSize(30);
         fill(255);
         text("Look! A ton of snakes!", 370, 300);
         text("Sneak by", 400, 500);
         text("Attack!", 600, 500);
       } else if (eventNumber === 5) {
+        if (keyPressed) {
+          if (keyCode == LEFT_ARROW) {
+            hungryXPos = 250;
+            hungryVersion = 1;
+            fill(70, 88, 113);
+            rect(hungryXPos, 170, 400, 200);
+
+          } else if (keyCode == RIGHT_ARROW) {
+            selectXPos = 600;
+            hungryVersion = 2;
+            fill(70, 88, 113);
+            rect(hungryXPos, 170, 400, 200);
+
+          } else {
+            fill(70, 88, 113);
+            rect(hungryXPos, 170, 400, 200);
+          }
+        } else {
+          fill(2570, 88, 1135);
+          rect(hungryXPos, 170, 400, 200);
+        }
+
+        if (keyPressed) {
+          if (keyCode == UP_ARROW) {
+            eventEnd = 1;
+          }
+        }
         textSize(30);
         fill(255);
         text("You are really hungry!", 370, 300);
@@ -910,4 +1019,65 @@ class RandomEvent {
       }
     }
   }
+
+  void resetEvent() {
+    if (eventEnd == 1) {
+      eventEnd = 0;
+    }
+
+  }
+}
+
+////////////////////// Selects an event ////////////////////////////////////
+class SelectEvent {
+    ArrayList < Events > eventList;
+  var eventTime;
+
+  SelectEvent() {
+    eventList = new ArrayList < Events > ();
+  }
+
+  void addEvent() {
+      RandomEvent currentEvent = new RandomEvent();
+      eventList.add(currentEvent);
+      println("add event");
+
+  }
+
+  void drawSelectEvent() {
+    if (frameCount % 30 == 0) {
+    for (var i = 0; i < eventList.size(); i++) {
+
+      var thisEvent = eventList.get(i);
+
+      thisEvent.drawEvent();
+      println("draw event");
+
+    }
+  }
+  }
+
+  void resetSelectEvent() {
+
+    for (var i = 0; i < eventList.size(); i++) {
+
+      var thisEvent = eventList.get(i);
+
+      thisEvent.resetEvent();
+
+    }
+  }
+
+  void makeEvent() {
+    addEvent();
+    drawSelectEvent();
+    // if (eventList.size() > 0) {
+    //   eventList.remove(i);
+    //   i--;
+    //   println("remove event");
+    // }
+    //resetSelectEvent();
+
+  }
+
 }
