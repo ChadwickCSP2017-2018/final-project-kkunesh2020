@@ -9,6 +9,8 @@ var DOWN_ARROW = '40';
 var LEFT_ARROW = '37';
 var RIGHT_ARROW = '39';
 var ENTER_KEY = '13';
+var SPACE_BAR = '32';
+var BACKGROUND_MUSIC = new Audio('Hello Ditty.mp3');
 var Sun_xpos = 200;
 var desertTime = 2500;
 var health = 100;
@@ -151,6 +153,8 @@ void setup() {
     grumpyCharacter[i] = loadImage("grumpyCharacter-" + i + ".png")
   }
 
+BACKGROUND_MUSIC.play();
+
   for (var i = 1; i < 34; i++) {
     frisbeeCharacter[i] = loadImage("frisbeeDog-" + i + ".png")
   }
@@ -203,6 +207,7 @@ void draw() {
   selectButton.SelectCharacter();
   startingScreenGrumpy.drawGrumpyCharacter();
   startingScreenFrisbee.drawFrisbeeCharacter();
+  BACKGROUND_MUSIC.play();
 
   if (gameStart === 1 && health > 0) {
 
