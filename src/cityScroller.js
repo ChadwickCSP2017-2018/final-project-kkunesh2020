@@ -19,11 +19,11 @@ var foodNumber = 20;
 var characterVersion = 0;
 var selectXPos = 250;
 var gameStart = 0;
-var berryXPos = 250;
-var wolvesXPos = 250;
-var noiseXPos = 250;
-var snakesXPos = 250;
-var hungryXPos = 250;
+var berryXPos = 400;
+var wolvesXPos = 400;
+var noiseXPos = 400;
+var snakesXPos = 400;
+var hungryXPos = 400;
 var berryVersion = 0;
 var wolvesVersion = 0;
 var noiseVersion = 0;
@@ -104,6 +104,7 @@ Health healthBar = new Health();
 Food foodCount = new Food();
 Select selectButton = new Select();
 SelectEvent events = new SelectEvent();
+RandomEvent popup = new RandomEvent(90);
 
 
 /* @pjs preload="betterTree.png"; */
@@ -274,7 +275,8 @@ void draw() {
     textSize(50);
     text("Day " + dayNumber, WINDOW_WIDTH / 2 - 50, 40);
 
-    events.makeEvent();
+    //events.makeEvent();
+    popup.drawEvent();
 
   } else if (health <= 0) {
     background(BACKGROUND_COLOR_NIGHT);
@@ -848,33 +850,33 @@ class RandomEvent {
 
   RandomEvent(var et) {
     eventTime = et;
-    evenNumber = int(random(1, 6));
+    eventNumber = int(random(1, 6));
   }
 
   void drawEvent() {
-
+if (frameCount >= eventTime && frameCount <= eventTime + 300) {
     if (eventEnd == 0) {
       if (eventNumber === 1) {
         if (keyPressed) {
           if (keyCode == LEFT_ARROW) {
-            berryXPos = 250;
+            berryXPos = 400;
             berryVersion = 1;
-            fill(70, 88, 113);
-            rect(berryXPos, 170, 400, 200);
+            fill(203, 218, 242);
+            rect(berryXPos, 520, 200, 80);
 
           } else if (keyCode == RIGHT_ARROW) {
-            selectXPos = 600;
+            berryXPos = 780;
             berryVersion = 2;
-            fill(70, 88, 113);
-            rect(berryXPos, 170, 400, 200);
+            fill(203, 218, 242);
+            rect(berryXPos, 520, 200, 80);
 
           } else {
-            fill(70, 88, 113);
-            rect(berryXPos, 170, 400, 200);
+            fill(203, 218, 242);
+            rect(berryXPos, 520, 200, 80);
           }
         } else {
-          fill(2570, 88, 1135);
-          rect(berryXPos, 170, 400, 200);
+          fill(203, 218, 242);
+          rect(berryXPos, 520, 200, 80);
         }
 
         if (keyPressed) {
@@ -883,33 +885,34 @@ class RandomEvent {
           }
         }
 
-        textSize(30);
+        textSize(50);
         fill(255);
-        text("You have found berries! Would you like to take them?", 370, 300);
-        text("Yes", 400, 500);
-        text("No", 600, 500);
+        text("You have found berries!", 370, 300);
+        text("Would you like to take them?", 370, 350);
+        text("Yes", 420, 500);
+        text("No", 800, 500);
 
       } else if (eventNumber === 2) {
         if (keyPressed) {
           if (keyCode == LEFT_ARROW) {
-            wolvesXPos = 250;
+            wolvesXPos = 400;
             wolvesVersion = 1;
-            fill(70, 88, 113);
-            rect(wolvesXPos, 170, 400, 200);
+            fill(203, 218, 242);
+            rect(wolvesXPos, 520, 200, 80);
 
           } else if (keyCode == RIGHT_ARROW) {
-            selectXPos = 600;
+            wolvesXPos = 780;
             wolvesVersion = 2;
-            fill(70, 88, 113);
-            rect(wolvesXPos, 170, 400, 200);
+            fill(203, 218, 242);
+            rect(wolvesXPos, 520, 200, 80);
 
           } else {
-            fill(70, 88, 113);
-            rect(wolvesXPos, 170, 400, 200);
+            fill(203, 218, 242);
+            rect(wolvesXPos, 520, 200, 80);
           }
         } else {
-          fill(2570, 88, 1135);
-          rect(wolvesXPos, 170, 400, 200);
+          fill(203, 218, 242);
+          rect(wolvesXPos, 520, 200, 80);
         }
 
         if (keyPressed) {
@@ -917,32 +920,32 @@ class RandomEvent {
             eventEnd = 1;
           }
         }
-        textSize(30);
+        textSize(50);
         fill(255);
         text("You are surrounded by wolves!", 370, 300);
-        text("Run", 400, 500);
-        text("Feed", 600, 500);
+        text("Run", 420, 500);
+        text("Feed", 800, 500);
       } else if (eventNumber === 3) {
         if (keyPressed) {
           if (keyCode == LEFT_ARROW) {
-            noiseXPos = 250;
+            noiseXPos = 400;
             noiseVersion = 1;
-            fill(70, 88, 113);
-            rect(noiseXPos, 170, 400, 200);
+            fill(203, 218, 242);
+            rect(noiseXPos, 520, 400, 200);
 
           } else if (keyCode == RIGHT_ARROW) {
-            selectXPos = 600;
+            noiseXPos = 780;
             noiseVersion = 2;
-            fill(70, 88, 113);
-            rect(noiseXPos, 170, 400, 200);
+            fill(203, 218, 242);
+            rect(noiseXPos, 520, 200, 80);
 
           } else {
-            fill(70, 88, 113);
-            rect(noiseXPos, 170, 400, 200);
+            fill(203, 218, 242);
+            rect(noiseXPos, 520, 200, 80);
           }
         } else {
-          fill(2570, 88, 1135);
-          rect(noiseXPos, 170, 400, 200);
+          fill(203, 218, 242);
+          rect(noiseXPos, 520, 200, 80);
         }
 
         if (keyPressed) {
@@ -950,32 +953,33 @@ class RandomEvent {
             eventEnd = 1;
           }
         }
-        textSize(30);
+        textSize(50);
         fill(255);
-        text("You hear a noise. Should you investigate?", 370, 300);
-        text("Yes", 400, 500);
-        text("No", 600, 500);
+        text("You hear a noise.", 370, 300);
+        text("Should you investigate?", 370, 350);
+        text("Yes", 420, 500);
+        text("No", 800, 500);
       } else if (eventNumber === 4) {
         if (keyPressed) {
           if (keyCode == LEFT_ARROW) {
-            snakesXPos = 250;
+            snakesXPos = 400;
             snakesVersion = 1;
-            fill(70, 88, 113);
-            rect(snakesXPos, 170, 400, 200);
+            fill(203, 218, 242);
+            rect(snakesXPos, 520, 250, 80);
 
           } else if (keyCode == RIGHT_ARROW) {
-            selectXPos = 600;
+            snakesXPos = 780;
             snakesVersion = 2;
-            fill(70, 88, 113);
-            rect(snakesXPos, 170, 400, 200);
+            fill(203, 218, 242);
+            rect(snakesXPos, 520, 250, 80);
 
           } else {
-            fill(70, 88, 113);
-            rect(snakesXPos, 170, 400, 200);
+            fill(203, 218, 242);
+            rect(snakesXPos, 520, 250, 80);
           }
         } else {
-          fill(2570, 88, 1135);
-          rect(snakesXPos, 170, 400, 200);
+          fill(203, 218, 242);
+          rect(snakesXPos, 520, 250, 80);
         }
 
         if (keyPressed) {
@@ -983,32 +987,32 @@ class RandomEvent {
             eventEnd = 1;
           }
         }
-        textSize(30);
+        textSize(50);
         fill(255);
         text("Look! A ton of snakes!", 370, 300);
-        text("Sneak by", 400, 500);
-        text("Attack!", 600, 500);
+        text("Sneak by", 420, 500);
+        text("Attack!", 800, 500);
       } else if (eventNumber === 5) {
         if (keyPressed) {
           if (keyCode == LEFT_ARROW) {
-            hungryXPos = 250;
+            hungryXPos = 300;
             hungryVersion = 1;
-            fill(70, 88, 113);
-            rect(hungryXPos, 170, 400, 200);
+            fill(203, 218, 242);
+            rect(hungryXPos, 190, 400, 200);
 
           } else if (keyCode == RIGHT_ARROW) {
-            selectXPos = 600;
+            hungryXPos = 600;
             hungryVersion = 2;
-            fill(70, 88, 113);
-            rect(hungryXPos, 170, 400, 200);
+            fill(203, 218, 242);
+            rect(hungryXPos, 190, 400, 200);
 
           } else {
-            fill(70, 88, 113);
-            rect(hungryXPos, 170, 400, 200);
+            fill(203, 218, 242);
+            rect(hungryXPos, 190, 400, 200);
           }
         } else {
-          fill(2570, 88, 1135);
-          rect(hungryXPos, 170, 400, 200);
+          fill(203, 218, 242);
+          rect(hungryXPos, 190, 400, 200);
         }
 
         if (keyPressed) {
@@ -1016,7 +1020,7 @@ class RandomEvent {
             eventEnd = 1;
           }
         }
-        textSize(30);
+        textSize(50);
         fill(255);
         text("You are really hungry!", 370, 300);
         text("Eat", 400, 500);
@@ -1024,6 +1028,7 @@ class RandomEvent {
       }
     }
   }
+}
 
   void resetEvent() {
     if (eventEnd == 1) {
@@ -1043,7 +1048,7 @@ class SelectEvent {
   }
 
   void addEvent() {
-      RandomEvent currentEvent = new RandomEvent();
+      RandomEvent currentEvent = new RandomEvent(30);
       eventList.add(currentEvent);
       println("add event");
 
