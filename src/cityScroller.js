@@ -813,6 +813,7 @@ class Food {
 class Select {
   Select() {}
   void SelectCharacter() {
+    if (gameStart < 1) {
     if (keyPressed) {
       if (keyCode == LEFT_ARROW) {
         selectXPos = 250;
@@ -830,7 +831,13 @@ class Select {
         fill(255);
         rect(selectXPos, 170, 400, 200);
       }
-    } else {
+    } else if (selectXPos == 250) {
+      characterVersion = 1;
+      fill(255);
+      rect(selectXPos, 170, 400, 200);
+    }
+    else if (selectXPos == 750) {
+      characterVersion = 2;
       fill(255);
       rect(selectXPos, 170, 400, 200);
     }
@@ -842,15 +849,22 @@ class Select {
     }
   }
 }
+}
 
 ////////////////////// Makes A Random Event ////////////////////////////////////
 class RandomEvent {
   var eventNumber;
   var eventTime;
+  var selectionY;
+  var selectionWidth;
+  var selectionHeight;
 
   RandomEvent(var et) {
     eventTime = et;
     eventNumber = int(random(1, 6));
+    selectionY = 440;
+    selectionWidth = 130;
+    selectionHeight = 80;
   }
 
   void drawEvent() {
@@ -862,32 +876,43 @@ if (frameCount >= eventTime && frameCount <= eventTime + 300) {
             berryXPos = 400;
             berryVersion = 1;
             fill(203, 218, 242);
-            rect(berryXPos, 520, 200, 80);
+            rect(berryXPos, selectionY, selectionWidth, selectionHeight);
 
           } else if (keyCode == RIGHT_ARROW) {
             berryXPos = 780;
             berryVersion = 2;
+            selectionWidth = 115;
             fill(203, 218, 242);
-            rect(berryXPos, 520, 200, 80);
+            rect(berryXPos, selectionY, selectionWidth, selectionHeight);
 
           } else {
             fill(203, 218, 242);
-            rect(berryXPos, 520, 200, 80);
+            rect(berryXPos, selectionY, selectionWidth, selectionHeight);
           }
-        } else {
+        } else if (berryXPos == 400){
+          berryVersion = 1;
           fill(203, 218, 242);
-          rect(berryXPos, 520, 200, 80);
+          rect(berryXPos, selectionY, selectionWidth, selectionHeight);
+        }
+        else if (berryXPos == 780){
+          berryVersion = 2;
+          fill(203, 218, 242);
+          rect(berryXPos, selectionY, selectionWidth, selectionHeight);
         }
 
         if (keyPressed) {
           if (keyCode == UP_ARROW) {
             eventEnd = 1;
+            if (berryVersion == 1) {
+              foodNumber += 2;
+              health -= 10;
+            }
           }
         }
 
         textSize(50);
         fill(255);
-        text("You have found berries!", 370, 300);
+        text("You have found berries!", 395, 300);
         text("Would you like to take them?", 370, 350);
         text("Yes", 420, 500);
         text("No", 800, 500);
@@ -897,27 +922,41 @@ if (frameCount >= eventTime && frameCount <= eventTime + 300) {
           if (keyCode == LEFT_ARROW) {
             wolvesXPos = 400;
             wolvesVersion = 1;
+            selectionWidth = 125;
             fill(203, 218, 242);
-            rect(wolvesXPos, 520, 200, 80);
+            rect(wolvesXPos, selectionY, selectionWidth, selectionHeight);
 
           } else if (keyCode == RIGHT_ARROW) {
             wolvesXPos = 780;
             wolvesVersion = 2;
+            selectionWidth = 160;
             fill(203, 218, 242);
-            rect(wolvesXPos, 520, 200, 80);
+            rect(wolvesXPos, selectionY, selectionWidth, selectionHeight);
 
           } else {
             fill(203, 218, 242);
-            rect(wolvesXPos, 520, 200, 80);
+            rect(wolvesXPos, selectionY, selectionWidth, selectionHeight);
           }
-        } else {
+        } else if (wolvesXPos == 400) {
+          selectionWidth = 125;
+          wolvesVersion = 1;
           fill(203, 218, 242);
-          rect(wolvesXPos, 520, 200, 80);
+          rect(wolvesXPos, selectionY, selectionWidth, selectionHeight);
         }
-
+        else if (wolvesXPos == 780) {
+          wolvesVersion = 2;
+          fill(203, 218, 242);
+          rect(wolvesXPos, selectionY, selectionWidth, selectionHeight);
+        }
         if (keyPressed) {
           if (keyCode == UP_ARROW) {
             eventEnd = 1;
+            if (wolvesVersion == 1) {
+              health -= 25;
+            }
+            else if (wolvesVersion == 2) {
+            foodNumber -= 8;
+            }
           }
         }
         textSize(50);
@@ -931,31 +970,44 @@ if (frameCount >= eventTime && frameCount <= eventTime + 300) {
             noiseXPos = 400;
             noiseVersion = 1;
             fill(203, 218, 242);
-            rect(noiseXPos, 520, 400, 200);
+            rect(noiseXPos, selectionY, selectionWidth, selectionHeight);
 
           } else if (keyCode == RIGHT_ARROW) {
             noiseXPos = 780;
             noiseVersion = 2;
+            selectionWidth = 115;
             fill(203, 218, 242);
-            rect(noiseXPos, 520, 200, 80);
+            rect(noiseXPos, selectionY, selectionWidth, selectionHeight);
 
           } else {
             fill(203, 218, 242);
-            rect(noiseXPos, 520, 200, 80);
+            rect(noiseXPos, selectionY, selectionWidth, selectionHeight);
           }
-        } else {
+        } else if (noiseXPos == 400) {
+          noiseVersion = 1;
           fill(203, 218, 242);
-          rect(noiseXPos, 520, 200, 80);
+          rect(noiseXPos, selectionY, selectionWidth, selectionHeight);
+        }
+        else if (noiseXPos == 780) {
+          noiseVersion = 2;
+          fill(203, 218, 242);
+          rect(noiseXPos, selectionY, selectionWidth, selectionHeight);
         }
 
         if (keyPressed) {
           if (keyCode == UP_ARROW) {
             eventEnd = 1;
+            if (noiseVersion == 1 && Sun_xpos >= 1550) {
+              health -= 10;
+            }
+            else if (noiseVersion == 1 && ((Sun_xpos <= 300) || (Sun_xpos >= 950 && Sun_xpos <= 1550))) {
+              foodNumber += 3;
+            }
           }
         }
         textSize(50);
         fill(255);
-        text("You hear a noise.", 370, 300);
+        text("You hear a noise.", 450, 300);
         text("Should you investigate?", 370, 350);
         text("Yes", 420, 500);
         text("No", 800, 500);
@@ -964,73 +1016,113 @@ if (frameCount >= eventTime && frameCount <= eventTime + 300) {
           if (keyCode == LEFT_ARROW) {
             snakesXPos = 400;
             snakesVersion = 1;
+            selectionWidth = 240;
             fill(203, 218, 242);
-            rect(snakesXPos, 520, 250, 80);
+            rect(snakesXPos, selectionY, selectionWidth, selectionHeight);
 
           } else if (keyCode == RIGHT_ARROW) {
             snakesXPos = 780;
             snakesVersion = 2;
+            selectionWidth = 190;
             fill(203, 218, 242);
-            rect(snakesXPos, 520, 250, 80);
+            rect(snakesXPos, selectionY, selectionWidth, selectionHeight);
 
           } else {
             fill(203, 218, 242);
-            rect(snakesXPos, 520, 250, 80);
+            rect(snakesXPos, selectionY, selectionWidth, selectionHeight);
           }
-        } else {
+        } else if (snakesXPos == 400) {
+          selectionWidth = 240;
+          snakesVersion = 1;
           fill(203, 218, 242);
-          rect(snakesXPos, 520, 250, 80);
+          rect(snakesXPos, selectionY, selectionWidth, selectionHeight);
+        }
+        else if (snakesXPos == 780) {
+          snakesVersion = 2;
+          fill(203, 218, 242);
+          rect(snakesXPos, selectionY, selectionWidth, selectionHeight);
         }
 
         if (keyPressed) {
           if (keyCode == UP_ARROW) {
             eventEnd = 1;
+            sneakOutcome = int(random(1, 3));
+            if (snakesVersion == 1) {
+              if (sneakOutcome == 1 || sneakOutcome == 2) {
+                health -= 50;
+              }
+            }
+            else if (snakesVersion == 2) {
+              if (sneakOutcome == 1 || sneakOutcome == 2) {
+                foodNumber += 5;
+              }
+              else if (sneakOutcome == 3) {
+                health -= 40;
+              }
+
           }
         }
+      }
         textSize(50);
         fill(255);
-        text("Look! A ton of snakes!", 370, 300);
+        text("Look! A ton of snakes!", 440, 300);
         text("Sneak by", 420, 500);
         text("Attack!", 800, 500);
       } else if (eventNumber === 5) {
         if (keyPressed) {
           if (keyCode == LEFT_ARROW) {
-            hungryXPos = 300;
+            hungryXPos = 400;
             hungryVersion = 1;
+            selectionWidth = 130;
             fill(203, 218, 242);
-            rect(hungryXPos, 190, 400, 200);
+            rect(hungryXPos, selectionY, selectionWidth, selectionHeight);
 
           } else if (keyCode == RIGHT_ARROW) {
-            hungryXPos = 600;
+            hungryXPos = 780;
             hungryVersion = 2;
+            selectionWidth = 230;
             fill(203, 218, 242);
-            rect(hungryXPos, 190, 400, 200);
+            rect(hungryXPos, selectionY, selectionWidth, selectionHeight);
 
           } else {
             fill(203, 218, 242);
-            rect(hungryXPos, 190, 400, 200);
+            rect(hungryXPos, selectionY, selectionWidth, selectionHeight);
           }
-        } else {
+        } else if (hungryXPos == 400) {
+          hungryVersion = 1;
           fill(203, 218, 242);
-          rect(hungryXPos, 190, 400, 200);
+          rect(hungryXPos, selectionY, selectionWidth, selectionHeight);
+        }
+        else if (hungryXPos == 780) {
+          hungryVersion = 2;
+          selectionWidth = 230;
+          fill(203, 218, 242);
+          rect(hungryXPos, selectionY, selectionWidth, selectionHeight);
         }
 
         if (keyPressed) {
           if (keyCode == UP_ARROW) {
             eventEnd = 1;
+            if (hungryVersion == 1) {
+              foodNumber -= int(foodNumber * 0.3);
+            }
+            else if (hungryVersion == 2) {
+            health -= int(health * 0.2);
+            }
           }
         }
         textSize(50);
         fill(255);
-        text("You are really hungry!", 370, 300);
-        text("Eat", 400, 500);
-        text("Don't eat", 600, 500);
+        text("You are really hungry!", 470, 300);
+        text("Eat", 420, 500);
+        text("Don't eat", 800, 500);
       }
     }
   }
 }
 
-  void resetEvent() {
+
+  void ResetEvent() {
     if (eventEnd == 1) {
       eventEnd = 0;
     }
