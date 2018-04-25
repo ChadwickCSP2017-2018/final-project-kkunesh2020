@@ -278,7 +278,7 @@ void draw() {
     //events.makeEvent();
     popup.drawEvent();
 
-  } else if (health <= 0) {
+  } else if (health <= 0 || dayNumber >=8 || foodCount <=0) {
     background(BACKGROUND_COLOR_NIGHT);
     image(starsImage, 0, -300);
     textSize(100);
