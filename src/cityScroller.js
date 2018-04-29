@@ -286,7 +286,6 @@ void draw() {
     fill(255);
     text("Game Over", 430, 200);
   }
-  println("FrameRate:" + frameRate);
 }
 
 ////////////////////// Makes A Tree ////////////////////////////////////
